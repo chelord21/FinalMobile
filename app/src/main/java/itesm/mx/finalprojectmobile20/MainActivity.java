@@ -16,7 +16,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         Parse.enableLocalDatastore(this);
-
         Parse.initialize(this, "APPLICATION ID", "CLIENT KEY");
     }
 
