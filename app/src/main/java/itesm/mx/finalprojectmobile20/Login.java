@@ -34,7 +34,7 @@ public class Login extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "APPLICATION ID", "CLIENT KEY");
+        Parse.initialize(this, "apXAsVSwGzEOIs1zqznS8obypwm8SGtHcrVsvRDM", "gPkvvX7CAJpsumX9YKeoUxEcXXCFVG81YSWnQfxN");
 
         login_username_ET = (EditText) findViewById(R.id.login_username_ET);
         login_password_ET =(EditText) findViewById(R.id.login_password_ET);
