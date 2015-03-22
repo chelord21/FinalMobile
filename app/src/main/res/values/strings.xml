@@ -16,5 +16,12 @@
     <string name="Repeat_pass">Repeate Password</string>
     <string name="title_activity_user_profile">userProfile</string>
     <string name="Back">Back</string>
+    <string name="title_activity_grupos">Grupos</string>
+    <string name="title_section1">User Profile</string>
+    <string name="title_section2">See Change</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
 
 </resources>
