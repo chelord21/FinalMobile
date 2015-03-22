@@ -1,6 +1,8 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.parse.ParseObject;
 
 
 public class Grupos extends ActionBarActivity
@@ -27,6 +34,7 @@ public class Grupos extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    Button grupos_crearGrupo_BT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,36 @@ public class Grupos extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        grupos_crearGrupo_BT = (Button)findViewById(R.id.grupos_creaGrupo_BT);
+        grupos_crearGrupo_BT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(Grupos.this);
+                LayoutInflater inflater = Grupos.this.getLayoutInflater();
+                //this is what I did to added the layout to the alert dialog
+                View layout=inflater.inflate(R.layout.alert_layout, null);
+                alert.setView(layout);
+                final EditText usernameInput = (EditText) layout.findViewById(R.id.alert_ET);
+                alert.setTitle("Create new group");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        String nombreGrupo = usernameInput.getText().toString();
+                        ParseObject grupo = new ParseObject("Group");
+                        grupo.put("nombre", nombreGrupo);
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+            }
+        });
     }
 
     @Override

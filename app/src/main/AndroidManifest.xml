@@ -39,6 +39,10 @@
             android:name=".Active_Chat"
             android:label="@string/title_activity_active__chat" >
         </activity>
+        <activity
+            android:name=".Groups"
+            android:label="@string/title_activity_groups" >
+        </activity>
     </application>
 
 </manifest>

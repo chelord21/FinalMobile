@@ -1,5 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,8 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseUser;
+import com.parse.ParseException;
 
 
 public class Login extends ActionBarActivity {
@@ -48,10 +53,22 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.login_Log_Btn:
+                        final String username = login_username_ET.getText().toString();
+                        String password = login_password_ET.getText().toString();
 
+                        ParseUser.logInInBackground(username, password, new LogInCallback() {
+                            public void done(ParseUser user, ParseException e) {
+                                if (user != null) {
+                                    Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                         break;
                     case R.id.login_nuser_Btn:
-
+                        Intent newUser = new Intent(Login.this, NewUser.class);
+                        startActivity(newUser);
                         break;
                 }
             }
