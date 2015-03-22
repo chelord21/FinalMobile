@@ -1,6 +1,7 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -56,6 +57,8 @@ public class Grupos extends ActionBarActivity
             case 1:
                 break;
             case 2:
+                Intent intent = new Intent(getApplicationContext(), userProfile.class);
+                startActivity(intent);
                 break;
         }
     }
