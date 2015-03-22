@@ -68,30 +68,39 @@ public class NewUser extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(newUser_create_Btn.isPressed()){
+                    String username = newUser_username_ET.getText().toString();
                     String email = newUser_email_ET.getText().toString();
                     String password = newUser_password_ET.getText().toString();
                     String repassword = newUser_rePasssword_ET.getText().toString();
                     if(isValidEmail(email)){
-                        if(password.equals(repassword)){
-                            ParseUser user = new ParseUser();
-                            user.setUsername(newUser_username_ET.getText().toString());
-                            user.setPassword(password);
-                            user.setEmail(email);
-
-                            user.signUpInBackground(new SignUpCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if(e == null){
-                                        Toast.makeText(getApplicationContext(),"User created succesfully",Toast.LENGTH_SHORT).show();
-                                    }
-                                    else{
-                                        Toast.makeText(getApplicationContext(),"Something went wrong, please try again.",Toast.LENGTH_SHORT).show();
-                                    }
+                        if(!password.matches("") && !repassword.matches("")){
+                            if(password.equals(repassword)) {
+                                if (username.matches("")) {
+                                    Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                                else {
+                                    ParseUser user = new ParseUser();
+                                    user.setUsername(username);
+                                    user.setPassword(password);
+                                    user.setEmail(email);
+                                    user.signUpInBackground(new SignUpCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"You didn't fill both password fields",Toast.LENGTH_SHORT).show();
                         }
                     }
                     else{

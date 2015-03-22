@@ -32,5 +32,8 @@
     <string name="send">Send</string>
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
+    <string name="grupos_tituloGrupos">My groups</string>
+    <string name="grupos_crearGrupo">New group</string>
+    <string name="title_activity_groups">Groups</string>
 
 </resources>
