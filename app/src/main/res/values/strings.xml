@@ -19,9 +19,18 @@
     <string name="title_activity_grupos">Grupos</string>
     <string name="title_section1">User Profile</string>
     <string name="title_section2">See Change</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+    <string name="title_activity_chats">Chats</string>
+    <string name="title_section3">Section 3</string>
+    <string name="chats_title_section1">Intial</string>
+    <string name="chats_title_section2">Add Users</string>
+    <string name="chats_title_section3">Add Events</string>
+    <string name="title_activity_active__chat">Active_Chat</string>
+    <string name="message_hint">Say anything</string>
+    <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 
 </resources>
