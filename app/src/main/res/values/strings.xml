@@ -35,5 +35,6 @@
     <string name="grupos_tituloGrupos">My groups</string>
     <string name="grupos_crearGrupo">New group</string>
     <string name="title_activity_groups">Groups</string>
+    <string name="title_activity_chat">ChatActivity</string>
 
 </resources>

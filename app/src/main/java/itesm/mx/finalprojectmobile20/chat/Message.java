@@ -1,4 +1,4 @@
-package itesm.mx.finalprojectmobile20;
+package itesm.mx.finalprojectmobile20.chat;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
