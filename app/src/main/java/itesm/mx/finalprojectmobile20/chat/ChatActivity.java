@@ -2,13 +2,13 @@ package itesm.mx.finalprojectmobile20.chat;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.os.Handler;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import itesm.mx.finalprojectmobile20.R;
+
+
+
+
 
 public class ChatActivity extends Activity {
     private static final String TAG = ChatActivity.class.getName();
@@ -97,7 +101,7 @@ public class ChatActivity extends Activity {
         query.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
-                    mMessages.clear();
+                    //mMessages.clear();
                     mMessages.addAll(messages);
                     mAdapter.notifyDataSetChanged(); // update adapter
                     lvChat.invalidate(); // redraw listview

@@ -36,8 +36,8 @@ public class Login extends ActionBarActivity {
     //Listeners
     View.OnClickListener login_buttonsListener_VOL;
 
-    public static final String YOUR_APPLICATION_ID = "AERqqIXGvzH7Nmg45xa5T8zWRRjqT8UmbFQeeI";
-    public static final String YOUR_CLIENT_KEY = "8bXPznF5eSLWq0sY9gTUrEF5BJlia7ltmLQFRh";
+    public static final String YOUR_APPLICATION_ID = "apXAsVSwGzEOIs1zqznS8obypwm8SGtHcrVsvRDM";
+    public static final String YOUR_CLIENT_KEY = "gPkvvX7CAJpsumX9YKeoUxEcXXCFVG81YSWnQfxN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

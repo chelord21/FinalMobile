@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import itesm.mx.finalprojectmobile20.chat.ChatActivity;
 
 
 public class NewUser extends ActionBarActivity {
@@ -88,6 +89,8 @@ public class NewUser extends ActionBarActivity {
                                         public void done(ParseException e) {
                                             if (e == null) {
                                                 Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(NewUser.this, ChatActivity.class);
+                                                startActivity(intent);
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                             }

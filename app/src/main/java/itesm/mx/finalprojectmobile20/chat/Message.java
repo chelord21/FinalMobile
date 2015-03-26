@@ -4,7 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 /**
- * Created by AlejandroSanchez on 3/21/15.
+ * Created by AlejandroSanchez on 3/23/15.
  */
 @ParseClassName("Message")
 public class Message extends ParseObject {
@@ -24,4 +24,3 @@ public class Message extends ParseObject {
         put("body", body);
     }
 }
-
