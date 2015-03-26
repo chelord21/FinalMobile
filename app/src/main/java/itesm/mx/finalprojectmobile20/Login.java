@@ -1,5 +1,7 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
@@ -32,6 +35,7 @@ public class Login extends ActionBarActivity {
     //Buttons
     Button login_login_Btn;
     Button login_newUser_Btn;
+    Button login_recoverPass_Btn;
 
     //Listeners
     View.OnClickListener login_buttonsListener_VOL;
@@ -53,6 +57,7 @@ public class Login extends ActionBarActivity {
         login_logo_IV = (ImageView) findViewById(R.id.login_Logo_IV);
         login_login_Btn = (Button) findViewById(R.id.login_Log_Btn);
         login_newUser_Btn = (Button) findViewById(R.id.login_nuser_Btn);
+        login_recoverPass_Btn = (Button) findViewById(R.id.login_recoverPass_BT);
 
         login_buttonsListener_VOL = new View.OnClickListener() {
             @Override
@@ -81,6 +86,38 @@ public class Login extends ActionBarActivity {
                 }
             }
         };
+
+        login_recoverPass_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alert = new AlertDialog.Builder(Login.this);
+                alert.setTitle("Type your mail");
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        final EditText input = new EditText(Login.this);
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.MATCH_PARENT);
+                        input.setLayoutParams(lp);
+                        alert.setView(input);
+                        Toast.makeText(getApplicationContext(),
+                                "Email has been sent",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getApplicationContext(),
+                                "Canceled",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+            }
+        });
 
         login_login_Btn.setOnClickListener(login_buttonsListener_VOL);
         login_newUser_Btn.setOnClickListener(login_buttonsListener_VOL);
