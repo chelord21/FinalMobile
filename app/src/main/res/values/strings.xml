@@ -36,5 +36,6 @@
     <string name="grupos_crearGrupo">New group</string>
     <string name="title_activity_groups">Groups</string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="login_recoverPassword">Forgot password?</string>
 
 </resources>

@@ -41,8 +41,6 @@ public class userProfile extends ActionBarActivity {
         userProfile_username_TV = (TextView) findViewById(R.id.userProf_username_TV);
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
 
-        userProfile_back_Btn = (Button) findViewById(R.id.userProf_back_Btn);
-
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
 
         userProfile_listener_OCL = new View.OnClickListener() {

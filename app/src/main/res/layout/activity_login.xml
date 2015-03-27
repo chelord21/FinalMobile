@@ -59,6 +59,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_recoverPassword"
+        android:id="@+id/login_recoverPass_BT"
+        android:layout_below="@+id/login_Log_Btn"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
 
