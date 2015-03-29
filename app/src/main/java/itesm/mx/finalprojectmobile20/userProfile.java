@@ -46,6 +46,7 @@ public class userProfile extends ActionBarActivity {
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
         ParseUser user = new ParseUser();
         user.getCurrentUser();
+        
         userProfile_username_TV.setText(user.getUsername());
         userProfile_email_TV.setText(user.getEmail());
         userProfile_listener_OCL = new View.OnClickListener() {
