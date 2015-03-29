@@ -1,7 +1,7 @@
 package itesm.mx.finalprojectmobile20;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 
 public class userProfile extends ActionBarActivity {
@@ -42,7 +44,10 @@ public class userProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
 
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
-
+        ParseUser user = new ParseUser();
+        user.getCurrentUser();
+        userProfile_username_TV.setText(user.getUsername());
+        userProfile_email_TV.setText(user.getEmail());
         userProfile_listener_OCL = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -15,8 +15,6 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-import itesm.mx.finalprojectmobile20.chat.ChatActivity;
-
 
 public class NewUser extends ActionBarActivity {
 
@@ -89,7 +87,8 @@ public class NewUser extends ActionBarActivity {
                                         public void done(ParseException e) {
                                             if (e == null) {
                                                 Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(NewUser.this, ChatActivity.class);
+                                                //Change this due to the fact that there will be creation of groups
+                                                Intent intent = new Intent(NewUser.this, userProfile.class);
                                                 startActivity(intent);
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
