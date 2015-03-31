@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.parse.ParseUser;
 
 
-public class userProfile extends ActionBarActivity {
+public class UserProfile extends ActionBarActivity {
 
     //TextViews
     /*
@@ -44,11 +44,8 @@ public class userProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
 
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
-        ParseUser user = new ParseUser();
-        user.getCurrentUser();
-        
-        userProfile_username_TV.setText(user.getUsername());
-        userProfile_email_TV.setText(user.getEmail());
+        userProfile_username_TV.setText(ParseUser.getCurrentUser().getUsername());
+        userProfile_email_TV.setText(ParseUser.getCurrentUser().getEmail());
         userProfile_listener_OCL = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

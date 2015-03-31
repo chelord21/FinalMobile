@@ -70,7 +70,7 @@ public class Login extends ActionBarActivity {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    Intent userProf = new Intent(Login.this, userProfile.class);
+                                    Intent userProf = new Intent(Login.this, UserProfile.class);
                                     startActivity(userProf);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
@@ -91,17 +91,14 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(Login.this);
                 alert.setTitle("Type your mail");
+                final EditText input = new EditText(Login.this);
+                alert.setView(input);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        final EditText input = new EditText(Login.this);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.MATCH_PARENT);
-                        input.setLayoutParams(lp);
-                        alert.setView(input);
+                        String mail = input.getText().toString();
                         Toast.makeText(getApplicationContext(),
-                                "Email has been sent",
+                                "Email has been sent to " + mail,
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
