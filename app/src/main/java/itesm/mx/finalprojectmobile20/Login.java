@@ -19,6 +19,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 import itesm.mx.finalprojectmobile20.chat.Message;
 
@@ -96,10 +97,25 @@ public class Login extends ActionBarActivity {
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        String mail = input.getText().toString();
-                        Toast.makeText(getApplicationContext(),
-                                "Email has been sent to " + mail,
-                                Toast.LENGTH_SHORT).show();
+                        final String mail = input.getText().toString();
+
+                        ParseUser.requestPasswordResetInBackground(mail,
+                                new RequestPasswordResetCallback() {
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            // An email was successfully sent with reset instructions.
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Email has been sent to " + mail,
+                                                    Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            // Something went wrong. Look at the ParseException to see what's up.
+                                            Toast.makeText(getApplicationContext(),
+                                                    "We couldn't send the email. Please try again later.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
