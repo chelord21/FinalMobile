@@ -31,7 +31,7 @@ public class Login extends ActionBarActivity {
 
     //Image views
     ImageView login_logo_IV;
-    ImageView aux;
+    ImageView aux2;
 
     //Buttons
     Button login_login_Btn;
