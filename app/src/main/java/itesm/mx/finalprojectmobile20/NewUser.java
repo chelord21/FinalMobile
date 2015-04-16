@@ -3,12 +3,17 @@ package itesm.mx.finalprojectmobile20;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
 public class NewUser extends ActionBarActivity {
@@ -62,50 +67,52 @@ public class NewUser extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(newUser_create_Btn.isPressed()){
-                    if(verifyPass(newUser_password_ET.getText().toString(), newUser_rePasssword_ET.getText().toString())
-                            && verifyUser(newUser_username_ET.getText().toString())){
-                        Toast.makeText(getApplicationContext(), "User Created", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), Login.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+                    String username = newUser_username_ET.getText().toString();
+                    String email = newUser_email_ET.getText().toString();
+                    String password = newUser_password_ET.getText().toString();
+                    String repassword = newUser_rePasssword_ET.getText().toString();
+                    if(isValidEmail(email)){
+                        if(!password.matches("") && !repassword.matches("")){
+                            if(password.equals(repassword)) {
+                                if (username.matches("")) {
+                                    Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    ParseUser user = new ParseUser();
+                                    user.setUsername(username);
+                                    user.setPassword(password);
+                                    user.setEmail(email);
+                                    user.signUpInBackground(new SignUpCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null) {
+                                                Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
+                                                //Change this due to the fact that there will be creation of groups
+                                                Intent intent = new Intent(NewUser.this, UserProfile.class);
+                                                startActivity(intent);
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"You didn't fill both password fields",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         };
         newUser_create_Btn.setOnClickListener(newUser_listener);
 
-    }
-
-     /*
-        Created function to verify if user is created in the database already
-        name is tentative : function
-        name = verifyUser(String username)
-        - returns Boolean 'true' if user doesn't exists
-        -returns Boolean 'false' if user does exists
-
-        Created function to verify if the passwords match in order to generate a password
-        name is tentative: function
-        name = verifyPass
-        parameters = pass ( Password ) and rePass ( Repeated Password)
-        -returns Boolean 'true' if passwords match
-        -returns Boolean 'false' if passwords don't match
-     */
-
-    private boolean verifyPass(String pass, String rePass) {
-        boolean verification=false;
-        if(pass.equals(rePass)){
-            verification =true;
-            return verification;
-        }
-        return verification;
-    }
-
-    private boolean verifyUser(String username){
-       /*
-            Generate code through parse to verify the user in the Database
-        */
-        return false;
     }
 
     @Override
@@ -128,5 +135,16 @@ public class NewUser extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Returns a boolean value depending if email is valid or not.
+     * The CharSequence argument is the email entered by the user
+     * about to be verified
+     * @param  target email entered by the user in the TextEdit 'email'
+     * @return true if email is valid, false if not.
+     */
+    public final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

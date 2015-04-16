@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="itesm.mx.finalprojectmobile20.userProfile">
+    tools:context="itesm.mx.finalprojectmobile20.UserProfile">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -12,19 +12,7 @@
         android:id="@+id/userProf_profile_IV"
         android:layout_marginTop="69dp"
         android:src="@drawable/ic_launcher"
-        android:layout_below="@+id/userProf_back_Btn"
         android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Back"
-        android:id="@+id/userProf_back_Btn"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/userProf_profile_IV"
-        android:layout_toStartOf="@+id/userProf_profile_IV"
-        android:layout_marginRight="61dp"
-        android:layout_marginEnd="61dp" />
 
     <TextView
         android:layout_width="wrap_content"
