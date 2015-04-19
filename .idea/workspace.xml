@@ -39,10 +39,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UserProfile.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UserProfile.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/UserProfile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9767442" vertical-offset="0" max-vertical-offset="2340">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2340">
               <caret line="81" column="38" selection-start-line="81" selection-start-column="38" selection-end-line="81" selection-end-column="38" />
               <folding>
                 <element signature="e#2623#4643#0" expanded="true" />
@@ -52,10 +52,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_user_profile.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="activity_user_profile.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="1035">
+            <state vertical-scroll-proportion="0.16206482" vertical-offset="0" max-vertical-offset="1035">
               <caret line="9" column="42" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="42" />
               <folding>
                 <element signature="e#223#258#0" expanded="true" />
@@ -67,16 +67,6 @@
           </provider>
           <provider editor-type-id="android-designer">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-              <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-              <folding />
-            </state>
           </provider>
         </entry>
       </file>
@@ -1168,7 +1158,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/NavigationDrawerFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/Grupos.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_grupos.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_chats.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/Chats.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/Chats_Grupos.java" />
@@ -1181,6 +1170,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/ChatListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/UserProfile.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -1502,7 +1492,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -1570,7 +1560,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="630">
           <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding />
+          <folding>
+            <element signature="e#627#645#0" expanded="true" />
+            <element signature="e#766#784#0" expanded="true" />
+            <element signature="e#1091#1124#0" expanded="true" />
+            <element signature="e#1231#1268#0" expanded="true" />
+            <element signature="e#1381#1410#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1594,7 +1590,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="645">
           <caret line="32" column="28" selection-start-line="32" selection-start-column="28" selection-end-line="32" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="e#627#645#0" expanded="true" />
+            <element signature="e#766#784#0" expanded="true" />
+            <element signature="e#1091#1124#0" expanded="true" />
+            <element signature="e#1231#1268#0" expanded="true" />
+            <element signature="e#1381#1410#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1644,7 +1646,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="435">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#627#645#0" expanded="true" />
+            <element signature="e#766#784#0" expanded="true" />
+            <element signature="e#1091#1124#0" expanded="true" />
+            <element signature="e#1231#1268#0" expanded="true" />
+            <element signature="e#1381#1410#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1694,7 +1702,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="493">
           <caret line="4" column="78" selection-start-line="4" selection-start-column="78" selection-end-line="4" selection-end-column="78" />
-          <folding />
+          <folding>
+            <element signature="e#627#645#0" expanded="true" />
+            <element signature="e#766#784#0" expanded="true" />
+            <element signature="e#1091#1124#0" expanded="true" />
+            <element signature="e#1231#1268#0" expanded="true" />
+            <element signature="e#1381#1410#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1748,17 +1762,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/UserProfile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2340">
+          <caret line="81" column="38" selection-start-line="81" selection-start-column="38" selection-end-line="81" selection-end-column="38" />
+          <folding>
+            <element signature="e#2623#4643#0" expanded="true" />
+            <element signature="e#4620#4621#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
-          <folding />
+        <state vertical-scroll-proportion="0.12209302" vertical-offset="0" max-vertical-offset="860">
+          <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
+          <folding>
+            <element signature="e#627#645#0" expanded="true" />
+            <element signature="e#766#784#0" expanded="true" />
+            <element signature="e#1091#1124#0" expanded="true" />
+            <element signature="e#1231#1268#0" expanded="true" />
+            <element signature="e#1381#1410#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_profile.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.0" vertical-offset="0" max-vertical-offset="1035">
+        <state vertical-scroll-proportion="0.16206482" vertical-offset="0" max-vertical-offset="1035">
           <caret line="9" column="42" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="42" />
           <folding>
             <element signature="e#223#258#0" expanded="true" />
@@ -1770,17 +1801,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/itesm/mx/finalprojectmobile20/UserProfile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9767442" vertical-offset="0" max-vertical-offset="2340">
-          <caret line="81" column="38" selection-start-line="81" selection-start-column="38" selection-end-line="81" selection-end-column="38" />
-          <folding>
-            <element signature="e#2623#4643#0" expanded="true" />
-            <element signature="e#4620#4621#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
   </component>
