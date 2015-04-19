@@ -17,9 +17,27 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Username:"
+        android:id="@+id/userProf_usernameTitle_TV"
+        android:layout_below="@+id/userProf_profile_IV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Username"
         android:id="@+id/userProf_username_TV"
-        android:layout_below="@+id/userProf_profile_IV"
+        android:layout_below="@+id/userProf_usernameTitle_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        android:id="@+id/userProf_emailTitle_TV"
+        android:layout_below="@+id/userProf_username_TV"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp" />
 
@@ -28,11 +46,18 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:id="@+id/userProf_email_TV"
-        android:layout_below="@+id/userProf_username_TV"
+        android:layout_below="@+id/userProf_emailTitle_TV"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp" />
+        android:layout_marginTop="14dp" />
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Photo"
+        android:layout_below="@+id/userProf_email_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:id="@+id/userProf_edit_Btn" />
 
 
 </RelativeLayout>
