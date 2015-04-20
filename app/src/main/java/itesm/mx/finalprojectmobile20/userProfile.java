@@ -61,58 +61,61 @@ public class UserProfile extends ActionBarActivity {
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
         userProfile_username_TV.setText(ParseUser.getCurrentUser().getUsername());
         userProfile_email_TV.setText(ParseUser.getCurrentUser().getEmail());
-        userProfile_listener_OCL = new View.OnClickListener() {
+
+        final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
+
+        userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(userProfile_back_Btn.isPressed()){
-                    Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
+                builder.setTitle("Edit Photo");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    try {
+                        File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
+
+                        //if (f.exists() && f.canWrite()) f.delete();
+
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+
+                        startActivityForResult(intent, 1);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Log.e(TAG, "No camera: " + e);
+                    }
+                    catch ( Exception e ) {
+                        Log.e(TAG, "Cannot make photo: " + e);
+                    }
                 }
-                else if (userProfile_edit_Btn.isPressed()) {
-                    final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
-                    builder.setTitle("Edit Photo");
-                    builder.setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int item) {
-                            if (options[item].equals("Take Photo")) {
-                                try {
-                                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
-
-                                    //if (f.exists() && f.canWrite()) f.delete();
-
-                                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-
-                                    startActivityForResult(intent, 1);
-                                }
-                                catch (ActivityNotFoundException e) {
-                                    Log.e(TAG, "No camera: " + e);
-                                }
-                                catch ( Exception e ) {
-                                    Log.e(TAG, "Cannot make photo: " + e);
-                                }
-                            }
-                            else if (options[item].equals("Select from Gallery")) {
-                                try {
-                                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.setType("image/*");
-                                    startActivityForResult(intent, 2);
-                                }
-                                catch (ActivityNotFoundException e) {
-                                    Log.e(TAG, "No gallery: " + e);
-                                }
-                            }
-                            else if (options[item].equals("Cancel")) {
-                                dialog.dismiss();
-                            }
-                        }
-                    });
-                    builder.show();
+                else if (options[item].equals("Select from Gallery")) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 2);
+                    }
+                    catch (ActivityNotFoundException e) {
+                        Log.e(TAG, "No gallery: " + e);
+                    }
                 }
+                else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+                    }
+                });
+                builder.show();
             }
-        };
+        });
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent=new Intent(getApplicationContext(),Groups.class);
+        Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
     }
 
     @Override
