@@ -88,7 +88,7 @@ public class NewUser extends ActionBarActivity {
                                             if (e == null) {
                                                 Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
                                                 //Change this due to the fact that there will be creation of groups
-                                                Intent intent = new Intent(NewUser.this, Groups.class);
+                                                Intent intent = new Intent(NewUser.this, UserProfile.class);
                                                 startActivity(intent);
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();

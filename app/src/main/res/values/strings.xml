@@ -7,7 +7,7 @@
     <string name="password">Enter password</string>
     <string name="New_user">New User</string>
     <string name="Log_In">Login</string>
-    <string name="title_activity_new_user">Register</string>
+    <string name="title_activity_new_user">NewUser</string>
     <string name="hello_world">Hello world!</string>
     <string name="username_newUser">Username</string>
     <string name="email">Email</string>
@@ -34,11 +34,8 @@
     <string name="profile_other">Other profile pic</string>
     <string name="grupos_tituloGrupos">My groups</string>
     <string name="grupos_crearGrupo">New group</string>
-    <string name="title_activity_groups">My groups</string>
+    <string name="title_activity_groups">Groups</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="login_recoverPassword">Forgot password?</string>
-    <string name="menu_addEvent">Add Event</string>
-    <string name="menu_addFriend">Add Friend</string>
-    <string name="title_activity_group">Group</string>
 
 </resources>

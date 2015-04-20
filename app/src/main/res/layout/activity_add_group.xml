@@ -7,5 +7,29 @@
     tools:context="itesm.mx.finalprojectmobile20.AddGroup">
 
 
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="50"
+        android:id="@+id/ag_groupPic_IV"
+        android:src="@drawable/ic_launcher"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ag_groupName_ET"
+        android:hint="Type here your group name"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
 
 </RelativeLayout>

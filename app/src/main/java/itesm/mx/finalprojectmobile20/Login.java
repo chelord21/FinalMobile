@@ -72,7 +72,7 @@ public class Login extends ActionBarActivity {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    Intent userProf = new Intent(Login.this, Groups.class);
+                                    Intent userProf = new Intent(Login.this, UserProfile.class);
                                     startActivity(userProf);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
@@ -92,7 +92,7 @@ public class Login extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(Login.this);
-                alert.setTitle("Type your email");
+                alert.setTitle("Type your mail");
                 final EditText input = new EditText(Login.this);
                 alert.setView(input);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
