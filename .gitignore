@@ -16,6 +16,8 @@ Thumbs.db
 *.iml
 .idea
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+#.idea/misc.xml
+#.FinalMobile.iml
 .gradle
 build/
 
@@ -41,33 +43,3 @@ proguard/
 
 # Log Files
 *.log
-
-.idea/libraries/appcompat_v7_21_0_3.xml
-
-.idea/libraries/appcompat_v7_21_0_3.xml
-
-.idea/libraries/appcompat_v7_21_0_3.xml
-
-.idea/libraries/support_annotations_21_0_3.xml
-
-.idea/modules.xml
-
-.idea/workspace.xml
-
-app/app.iml
-
-FinalMobile.iml
-
-FinalProjectMobile2.0.iml
-
-.idea/libraries/bolts_android_1_2_0.xml
-
-.idea/libraries/bolts_android_1_2_0.xml
-
-.idea/libraries/support_annotations_21_0_3.xml
-
-.idea/libraries/support_v4_21_0_3.xml
-
-.idea/misc.xml
-
-FinalMobile.iml
