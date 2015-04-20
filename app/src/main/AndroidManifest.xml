@@ -36,6 +36,14 @@
             android:name=".chat.ChatActivity"
             android:label="@string/title_activity_chat" >
         </activity>
+        <activity
+            android:name=".Groups"
+            android:label="@string/title_activity_groups" >
+        </activity>
+        <activity
+            android:name=".AddGroup"
+            android:label="@string/title_activity_addgroup" >
+        </activity>
     </application>
 
 </manifest>

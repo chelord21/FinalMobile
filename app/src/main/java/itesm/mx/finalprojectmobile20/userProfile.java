@@ -73,38 +73,38 @@ public class UserProfile extends ActionBarActivity {
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
-                    try {
-                        File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
+                        if (options[item].equals("Take Photo")) {
+                            try {
+                                File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
 
-                        //if (f.exists() && f.canWrite()) f.delete();
+                                //if (f.exists() && f.canWrite()) f.delete();
 
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                                intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 
-                        startActivityForResult(intent, 1);
-                    }
-                    catch (ActivityNotFoundException e) {
-                        Log.e(TAG, "No camera: " + e);
-                    }
-                    catch ( Exception e ) {
-                        Log.e(TAG, "Cannot make photo: " + e);
-                    }
-                }
-                else if (options[item].equals("Select from Gallery")) {
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, 2);
-                    }
-                    catch (ActivityNotFoundException e) {
-                        Log.e(TAG, "No gallery: " + e);
-                    }
-                }
-                else if (options[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
+                                startActivityForResult(intent, 1);
+                            }
+                            catch (ActivityNotFoundException e) {
+                                Log.e(TAG, "No camera: " + e);
+                            }
+                            catch ( Exception e ) {
+                                Log.e(TAG, "Cannot make photo: " + e);
+                            }
+                        }
+                        else if (options[item].equals("Select from Gallery")) {
+                            try {
+                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                intent.setType("image/*");
+                                startActivityForResult(intent, 2);
+                            }
+                            catch (ActivityNotFoundException e) {
+                                Log.e(TAG, "No gallery: " + e);
+                            }
+                        }
+                        else if (options[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
                     }
                 });
                 builder.show();
@@ -114,7 +114,7 @@ public class UserProfile extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent=new Intent(getApplicationContext(),Groups.class);
+        Intent intent=new Intent(getApplicationContext(),Login.class);
         Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
         startActivity(intent);
     }
