@@ -92,7 +92,7 @@ public class Login extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 final AlertDialog.Builder alert = new AlertDialog.Builder(Login.this);
-                alert.setTitle("Type your mail");
+                alert.setTitle("Type your email");
                 final EditText input = new EditText(Login.this);
                 alert.setView(input);
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

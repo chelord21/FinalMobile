@@ -39,5 +39,6 @@
     <string name="login_recoverPassword">Forgot password?</string>
     <string name="menu_addEvent">Add Event</string>
     <string name="menu_addFriend">Add Friend</string>
+    <string name="title_activity_group">Group</string>
 
 </resources>
