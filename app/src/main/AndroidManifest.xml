@@ -29,7 +29,7 @@
             android:label="@string/title_activity_new_user" >
         </activity>
         <activity
-            android:name=".UserProfile"
+            android:name=".userProfile"
             android:label="@string/title_activity_user_profile" >
         </activity>
         <activity
@@ -43,6 +43,10 @@
         <activity
             android:name=".AddGroup"
             android:label="@string/title_activity_addgroup" >
+        </activity>
+        <activity
+            android:name=".AddFriends"
+            android:label="@string/title_activity_add_friends" >
         </activity>
     </application>
 
