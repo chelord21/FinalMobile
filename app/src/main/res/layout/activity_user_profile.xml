@@ -7,12 +7,14 @@
     tools:context="itesm.mx.finalprojectmobile20.UserProfile">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="50"
         android:id="@+id/userProf_profile_IV"
-        android:layout_marginTop="69dp"
         android:src="@drawable/ic_launcher"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
