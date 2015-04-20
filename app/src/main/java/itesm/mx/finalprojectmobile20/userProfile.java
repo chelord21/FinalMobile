@@ -46,6 +46,7 @@ public class UserProfile extends ActionBarActivity {
 
     //ImageView
     ImageView userProfile_profile_IV;
+    Button aux1;
 
     //Listeners
     View.OnClickListener userProfile_listener_OCL;
