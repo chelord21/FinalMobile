@@ -12,6 +12,7 @@ public class Groups extends ActionBarActivity {
 
     ListView listaGrupos;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

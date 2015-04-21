@@ -18,8 +18,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="Choose group picture"
+        android:id="@+id/ag_changePic_BT"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -28,8 +28,24 @@
         android:layout_height="wrap_content"
         android:id="@+id/ag_groupName_ET"
         android:hint="Type here your group name"
-        android:layout_below="@+id/button"
+        android:layout_below="@+id/ag_changePic_BT"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="34dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ag_groupMotto_ET"
+        android:hint="Group motto"
+        android:layout_below="@+id/ag_groupName_ET"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/ag_save_BT"
+        android:layout_below="@+id/ag_groupMotto_ET"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
