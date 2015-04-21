@@ -4,6 +4,6 @@
     tools:context="itesm.mx.finalprojectmobile20.Groups">
 
 
-    <item android:id="@+id/menuGroups_addGroup" android:title="@string/action_settings"
+    <item android:id="@+id/menuGroups_addGroup" android:title="@string/addGroup"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

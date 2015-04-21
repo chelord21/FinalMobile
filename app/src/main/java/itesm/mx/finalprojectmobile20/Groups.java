@@ -1,5 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -35,7 +36,9 @@ public class Groups extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menuGroups_addGroup) {
+            Intent intent = new Intent(Groups.this, AddGroup.class);
+            startActivity(intent);
             return true;
         }
 
