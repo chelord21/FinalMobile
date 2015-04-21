@@ -71,7 +71,7 @@ public class Login extends ActionBarActivity {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    Intent userProf = new Intent(Login.this, UserProfile.class);
+                                    Intent userProf = new Intent(Login.this, Groups.class);
                                     startActivity(userProf);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();

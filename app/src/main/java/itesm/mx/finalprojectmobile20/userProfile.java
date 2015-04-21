@@ -46,7 +46,10 @@ public class UserProfile extends ActionBarActivity {
 
     //ImageView
     ImageView userProfile_profile_IV;
-    Button aux1;
+
+
+    // Bitmap
+    Bitmap scaled;
 
     //Listeners
     View.OnClickListener userProfile_listener_OCL;
@@ -137,8 +140,10 @@ public class UserProfile extends ActionBarActivity {
 
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
+                    int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+                    scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
 
-                    userProfile_profile_IV.setImageBitmap(bitmap);
+                    userProfile_profile_IV.setImageBitmap(scaled);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
