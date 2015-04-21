@@ -3,6 +3,7 @@ package itesm.mx.finalprojectmobile20;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -42,10 +43,10 @@ public class Groups extends ActionBarActivity {
                 if (e == null) {
                     grupos = scoreList;
                     for(int i=0; i<scoreList.size(); i++){
-                        nombres.add(scoreList[i].nombre);
+                        
                     }
                 } else {
-
+                  Log.d("Mensaje error", "Can't retrieve information");
                 }
             }
         });
