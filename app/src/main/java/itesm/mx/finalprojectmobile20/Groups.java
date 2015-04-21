@@ -5,12 +5,26 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Groups extends ActionBarActivity {
 
     ListView listaGrupos;
+    ArrayList<String> nombres;
+
+    List<ParseObject> grupos = new ArrayList<ParseObject>();
+
+    ArrayAdapter<String> adapter;
 
 
     @Override
@@ -19,6 +33,22 @@ public class Groups extends ActionBarActivity {
         setContentView(R.layout.activity_groups);
 
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
+
+        nombres = new ArrayList<String>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> scoreList, ParseException e) {
+                if (e == null) {
+                    grupos = scoreList;
+                    for(int i=0; i<scoreList.size(); i++){
+                        nombres.add(scoreList[i].nombre);
+                    }
+                } else {
+
+                }
+            }
+        });
     }
 
 

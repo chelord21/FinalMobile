@@ -17,8 +17,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 
@@ -27,12 +35,19 @@ public class AddGroup extends ActionBarActivity{
 
     /* Buttons */
     Button ag_changepic_bt;
+    Button ag_save_bt;
+
+    /* EditTexts */
+    EditText ag_nombre_et;
+    EditText ag_motto_et;
 
     /* ImageViews */
     ImageView ag_groupPic_iv;
 
     /* Images */
     Bitmap scaled;
+
+    byte[] arrayFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +56,10 @@ public class AddGroup extends ActionBarActivity{
 
         ag_changepic_bt = (Button)findViewById(R.id.ag_changePic_BT);
         ag_groupPic_iv = (ImageView)findViewById(R.id.ag_groupPic_IV);
+        ag_save_bt = (Button)findViewById(R.id.ag_save_BT);
+        ag_nombre_et = (EditText)findViewById(R.id.ag_groupName_ET);
+        ag_motto_et = (EditText)findViewById(R.id.ag_groupMotto_ET);
+
 
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
 
@@ -82,6 +101,30 @@ public class AddGroup extends ActionBarActivity{
                     }
                 });
                 builder.show();
+            }
+        });
+
+        ag_save_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                scaled.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                arrayFoto = stream.toByteArray();
+                */
+
+                if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
+                    ParseObject newGroup = new ParseObject("Group");
+                    newGroup.put("nombre", ag_nombre_et.getText().toString());
+                    newGroup.put("motto", ag_motto_et.getText().toString());
+                    newGroup.saveInBackground();
+                    Intent intent = new Intent(AddGroup.this, Groups.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
