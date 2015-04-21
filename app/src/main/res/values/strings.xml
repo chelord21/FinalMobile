@@ -40,5 +40,7 @@
     <string name="title_activity_addgroup">Add Group</string>
     <string name="title_activity_add_friends">AddFriends</string>
     <string name="addGroup">Add Group</string>
+    <string name="menuGroup_addFriend">Add Friend</string>
+    <string name="menuGroup_addEvent">Add Event</string>
 
 </resources>

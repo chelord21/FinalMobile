@@ -43,7 +43,7 @@ public class Groups extends ActionBarActivity {
                 if (e == null) {
                     grupos = scoreList;
                     for(int i=0; i<scoreList.size(); i++){
-                        
+
                     }
                 } else {
                   Log.d("Mensaje error", "Can't retrieve information");
