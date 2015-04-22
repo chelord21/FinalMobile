@@ -26,7 +26,7 @@ import com.parse.ParseUser;
 import java.io.File;
 
 
-public class UserProfile extends ActionBarActivity {
+public class userProfile extends ActionBarActivity {
     private static final String TAG = "";
 
     //TextViews
@@ -71,7 +71,7 @@ public class UserProfile extends ActionBarActivity {
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(userProfile.this);
                 builder.setTitle("Edit Photo");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
