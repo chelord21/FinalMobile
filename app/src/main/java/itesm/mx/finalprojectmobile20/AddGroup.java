@@ -8,10 +8,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +21,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 
@@ -115,10 +109,6 @@ public class AddGroup extends ActionBarActivity{
                 */
 
                 if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
-                    ParseObject newGroup = new ParseObject("Group");
-                    newGroup.put("nombre", ag_nombre_et.getText().toString());
-                    newGroup.put("motto", ag_motto_et.getText().toString());
-                    newGroup.saveInBackground();
                     Intent intent = new Intent(AddGroup.this, Groups.class);
                     startActivity(intent);
                 }

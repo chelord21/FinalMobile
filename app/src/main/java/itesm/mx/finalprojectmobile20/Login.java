@@ -16,13 +16,6 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
-
-import itesm.mx.finalprojectmobile20.chat.chatMain;
 
 
 public class Login extends ActionBarActivity {
@@ -53,8 +46,8 @@ public class Login extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
 
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
+       // Parse.enableLocalDatastore(this);
+       // Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
         login_username_ET = (EditText) findViewById(R.id.login_username_ET);
         login_password_ET =(EditText) findViewById(R.id.login_password_ET);
         login_logo_IV = (ImageView) findViewById(R.id.login_Logo_IV);
@@ -84,20 +77,6 @@ public class Login extends ActionBarActivity {
                             }
                         });
 
-                        ParseUser.logInInBackground(username, password, new LogInCallback() {
-                            public void done(ParseUser user, ParseException e) {
-                                if (user != null) {
-                                    Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    //Restablish theses
-//                                    Intent userProf = new Intent(Login.this, Groups.class);
-//                                    startActivity(userProf);
-                                      Intent chatTest = new Intent(Login.this, chatMain.class);
-                                      startActivity(chatTest);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
                         break;
                     case R.id.login_nuser_Btn:
                         Intent newUser = new Intent(Login.this, NewUser.class);
@@ -118,23 +97,6 @@ public class Login extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         final String mail = input.getText().toString();
-
-                        ParseUser.requestPasswordResetInBackground(mail,
-                                new RequestPasswordResetCallback() {
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            // An email was successfully sent with reset instructions.
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Email has been sent to " + mail,
-                                                    Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            // Something went wrong. Look at the ParseException to see what's up.
-                                            Toast.makeText(getApplicationContext(),
-                                                    "We couldn't send the email. Please try again later.",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
 
                     }
                 });

@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.ParseUser;
 
 import java.io.File;
 
@@ -63,9 +62,9 @@ public class userProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
         userProfile_edit_Btn = (Button) findViewById(R.id.userProf_edit_Btn);
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
-        userProfile_username_TV.setText(ParseUser.getCurrentUser().getUsername());
-        userProfile_email_TV.setText(ParseUser.getCurrentUser().getEmail());
-
+//        userProfile_username_TV.setText(ParseUser.getCurrentUser().getUsername());
+//        userProfile_email_TV.setText(ParseUser.getCurrentUser().getEmail());
+        //Crear el de firebase
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
 
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
