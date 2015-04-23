@@ -42,5 +42,6 @@
     <string name="addGroup">Add Group</string>
     <string name="menuGroup_addFriend">Add Friend</string>
     <string name="menuGroup_addEvent">Add Event</string>
+    <string name="title_activity_chat_main">chatMain</string>
 
 </resources>

@@ -1,0 +1,132 @@
+package itesm.mx.finalprojectmobile20.chat;
+
+import android.content.SharedPreferences;
+import android.database.DataSetObserver;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.Random;
+
+import itesm.mx.finalprojectmobile20.R;
+
+public class chatMain extends ActionBarActivity {
+
+
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+
+    private String chat_username_S;
+    private Firebase chat_firebase_ref;
+    private ValueEventListener chat_event_VEL;
+    private ChatListAdapter chat_listAdapter_LA;
+
+    EditText chat_input_ET;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat_main);
+
+        setUsername();
+        chat_firebase_ref = new Firebase(FIREBASE_URL).child("chat");
+        chat_input_ET = (EditText) findViewById(R.id.messageInput);
+        chat_input_ET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    sendMessage();
+                }
+                return true;
+            }
+        });
+
+        findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage();
+            }
+        });
+
+    }
+
+
+    private void setUsername() {
+        //User name set
+        SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+        chat_username_S = prefs.getString("username", null);
+        //If the user is null it assigns a random user
+        if (chat_username_S == null) {
+            Random r = new Random();
+            // Assign a random user name if we don't have one saved.
+            chat_username_S = "JavaUser" + r.nextInt(100000);
+            prefs.edit().putString("username", chat_username_S).commit();
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Setup our view and list adapter. Ensure it scrolls to the bottom as data changes
+        final ListView listView =(ListView) findViewById(android.R.id.list);
+        // Tell our list adapter that we only want 50 messages at a time
+        chat_listAdapter_LA = new ChatListAdapter(chat_firebase_ref.limit(50), this, R.layout.chat_message, chat_username_S);
+        listView.setAdapter(chat_listAdapter_LA);
+        chat_listAdapter_LA.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                listView.setSelection(chat_listAdapter_LA.getCount() - 1);
+            }
+        });
+
+        // Finally, a little indication of connection status
+        chat_event_VEL = chat_firebase_ref.getRoot().child(".info/connected").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean connected = (Boolean) dataSnapshot.getValue();
+                if (connected) {
+                    Toast.makeText(chatMain.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(chatMain.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                // No-op
+            }
+        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        chat_firebase_ref.getRoot().child(".info/connected").removeEventListener(chat_event_VEL);
+        chat_listAdapter_LA.cleanup();
+    }
+
+    private void sendMessage() {
+        EditText inputText = (EditText) findViewById(R.id.messageInput);
+        String input = inputText.getText().toString();
+        if (!input.equals("")) {
+            // Create our 'model', a Chat object
+            Chat chat = new Chat(input, chat_username_S);
+            // Create a new, auto-generated child of that chat location, and save our chat data there
+            chat_firebase_ref.push().setValue(chat);
+            inputText.setText("");
+        }
+    }
+}

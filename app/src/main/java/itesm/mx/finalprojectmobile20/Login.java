@@ -19,11 +19,10 @@ import com.firebase.client.FirebaseError;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
-import itesm.mx.finalprojectmobile20.chat.Message;
+import itesm.mx.finalprojectmobile20.chat.chatMain;
 
 
 public class Login extends ActionBarActivity {
@@ -56,7 +55,6 @@ public class Login extends ActionBarActivity {
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
-        ParseObject.registerSubclass(Message.class);
         login_username_ET = (EditText) findViewById(R.id.login_username_ET);
         login_password_ET =(EditText) findViewById(R.id.login_password_ET);
         login_logo_IV = (ImageView) findViewById(R.id.login_Logo_IV);
@@ -90,8 +88,11 @@ public class Login extends ActionBarActivity {
                             public void done(ParseUser user, ParseException e) {
                                 if (user != null) {
                                     Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    Intent userProf = new Intent(Login.this, Groups.class);
-                                    startActivity(userProf);
+                                    //Restablish theses
+//                                    Intent userProf = new Intent(Login.this, Groups.class);
+//                                    startActivity(userProf);
+                                      Intent chatTest = new Intent(Login.this, chatMain.class);
+                                      startActivity(chatTest);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
                                 }
