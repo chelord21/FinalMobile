@@ -20,7 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.RequestPasswordResetCallback;
 
-import itesm.mx.finalprojectmobile20.chat.ChatApplication;
+import itesm.mx.finalprojectmobile20.chat.chatMain;
 
 
 public class Login extends ActionBarActivity {
@@ -75,7 +75,7 @@ public class Login extends ActionBarActivity {
                                     //Restablish theses
 //                                    Intent userProf = new Intent(Login.this, Groups.class);
 //                                    startActivity(userProf);
-                                      Intent chatTest = new Intent(Login.this, ChatApplication.class);
+                                      Intent chatTest = new Intent(Login.this, chatMain.class);
                                       startActivity(chatTest);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
