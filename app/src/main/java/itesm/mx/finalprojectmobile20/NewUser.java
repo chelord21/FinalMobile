@@ -11,9 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.util.Map;
 
 
 public class NewUser extends ActionBarActivity {
@@ -58,6 +62,9 @@ public class NewUser extends ActionBarActivity {
 
         newUser_create_Btn = (Button) findViewById(R.id.newUser_create_Btn);
 
+        Firebase.setAndroidContext(this);
+        final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
+
         /*
             The listener just listens to the button Create, which sends the information to the Server
             the if verifies the passwords, if they match then it redirects to the main screen
@@ -93,6 +100,17 @@ public class NewUser extends ActionBarActivity {
                                             } else {
                                                 Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                             }
+                                        }
+                                    });
+
+                                    fireBaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                                        @Override
+                                        public void onSuccess(Map<String, Object> result) {
+                                            System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                                        }
+                                        @Override
+                                        public void onError(FirebaseError firebaseError) {
+                                            Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
