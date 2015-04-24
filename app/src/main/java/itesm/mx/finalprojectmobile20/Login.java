@@ -17,6 +17,8 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import itesm.mx.finalprojectmobile20.chat.ChatMain;
+
 
 public class Login extends ActionBarActivity {
     //Edit Text
@@ -63,7 +65,7 @@ public class Login extends ActionBarActivity {
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                Intent userProf = new Intent(Login.this, Groups.class);
+                                Intent userProf = new Intent(Login.this, ChatMain.class);
                                 startActivity(userProf);
                             }
                             @Override

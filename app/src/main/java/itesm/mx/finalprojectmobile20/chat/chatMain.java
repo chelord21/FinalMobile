@@ -21,7 +21,7 @@ import java.util.Random;
 
 import itesm.mx.finalprojectmobile20.R;
 
-public class chatMain extends ActionBarActivity {
+public class ChatMain extends ActionBarActivity {
 
 
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
@@ -98,9 +98,9 @@ public class chatMain extends ActionBarActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean connected = (Boolean) dataSnapshot.getValue();
                 if (connected) {
-                    Toast.makeText(chatMain.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatMain.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(chatMain.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatMain.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
                 }
             }
 
