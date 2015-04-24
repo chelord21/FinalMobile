@@ -35,9 +35,6 @@ public class Login extends ActionBarActivity {
     //Listeners
     View.OnClickListener login_buttonsListener_VOL;
 
-    public static final String YOUR_APPLICATION_ID = "apXAsVSwGzEOIs1zqznS8obypwm8SGtHcrVsvRDM";
-    public static final String YOUR_CLIENT_KEY = "gPkvvX7CAJpsumX9YKeoUxEcXXCFVG81YSWnQfxN";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +43,6 @@ public class Login extends ActionBarActivity {
         Firebase.setAndroidContext(this);
         final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
 
-       // Parse.enableLocalDatastore(this);
-       // Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
         login_username_ET = (EditText) findViewById(R.id.login_username_ET);
         login_password_ET =(EditText) findViewById(R.id.login_password_ET);
         login_logo_IV = (ImageView) findViewById(R.id.login_Logo_IV);
