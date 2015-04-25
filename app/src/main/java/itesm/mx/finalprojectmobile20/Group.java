@@ -4,14 +4,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class Group extends ActionBarActivity {
+
+    ListView listaEventos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
+        listaEventos = (ListView)findViewById(R.id.group_eventList_LV);
     }
 
 
