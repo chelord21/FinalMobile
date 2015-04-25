@@ -12,12 +12,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-import java.util.Random;
+import java.util.Map;
 
 import itesm.mx.finalprojectmobile20.R;
 
@@ -27,6 +29,7 @@ public class ChatMain extends ActionBarActivity {
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     private String chat_username_S;
+    private String user_email_S;
     private Firebase chat_firebase_ref;
     private ValueEventListener chat_event_VEL;
     private ChatListAdapter chat_listAdapter_LA;
@@ -38,6 +41,12 @@ public class ChatMain extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            user_email_S = extras.getString("email");
+        }
 
         setUsername();
         chat_firebase_ref = new Firebase(FIREBASE_URL).child("chat");
@@ -64,6 +73,42 @@ public class ChatMain extends ActionBarActivity {
 
     private void setUsername() {
         //User name set
+
+        Firebase ref = new Firebase(FIREBASE_URL + "users");
+        final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+        Query queryRef = ref.orderByChild("email").equalTo(user_email_S);
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
+                chat_username_S = value.get("user").toString();
+                prefs.edit().putString("username", chat_username_S).commit();
+                System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+        /*
         SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         chat_username_S = prefs.getString("username", null);
         //If the user is null it assigns a random user
@@ -73,6 +118,7 @@ public class ChatMain extends ActionBarActivity {
             chat_username_S = "JavaUser" + r.nextInt(100000);
             prefs.edit().putString("username", chat_username_S).commit();
         }
+        */
     }
 
 
