@@ -1,29 +1,22 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Groups extends ActionBarActivity {
 
     ListView listaGrupos;
     ArrayList<String> nombres;
-
-    List<ParseObject> grupos = new ArrayList<ParseObject>();
+    //Cambiar por lista de otro
+//    List<ParseObject> grupos = new ArrayList<ParseObject>();
 
     ArrayAdapter<String> adapter;
 
@@ -37,19 +30,7 @@ public class Groups extends ActionBarActivity {
 
         nombres = new ArrayList<String>();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> scoreList, ParseException e) {
-                if (e == null) {
-                    grupos = scoreList;
-                    for(int i=0; i<scoreList.size(); i++){
 
-                    }
-                } else {
-                  Log.d("Mensaje error", "Can't retrieve information");
-                }
-            }
-        });
     }
 
 

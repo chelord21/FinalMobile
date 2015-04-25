@@ -19,14 +19,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.ParseUser;
 
 import java.io.File;
 
 
-public class UserProfile extends ActionBarActivity {
+public class userProfile extends ActionBarActivity {
     private static final String TAG = "";
 
     //TextViews
@@ -41,7 +38,6 @@ public class UserProfile extends ActionBarActivity {
     TextView userProfile_email_TV;
 
     //Buttons
-    Button userProfile_back_Btn;
     Button userProfile_edit_Btn;
 
     //ImageView
@@ -63,15 +59,14 @@ public class UserProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
         userProfile_edit_Btn = (Button) findViewById(R.id.userProf_edit_Btn);
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
-        userProfile_username_TV.setText(ParseUser.getCurrentUser().getUsername());
-        userProfile_email_TV.setText(ParseUser.getCurrentUser().getEmail());
 
+        //Crear el de firebase
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
 
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(userProfile.this);
                 builder.setTitle("Edit Photo");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
@@ -115,12 +110,12 @@ public class UserProfile extends ActionBarActivity {
         });
     }
 
-    @Override
-    public void onBackPressed(){
-        Intent intent=new Intent(getApplicationContext(),Login.class);
-        Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-    }
+//    @Override
+//    public void onBackPressed(){
+//        Intent intent=new Intent(getApplicationContext(),Login.class);
+//        Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
+//        startActivity(intent);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

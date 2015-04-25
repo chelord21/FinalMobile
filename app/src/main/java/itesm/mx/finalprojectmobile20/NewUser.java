@@ -1,6 +1,5 @@
 package itesm.mx.finalprojectmobile20;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -11,9 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.Map;
 
 
 public class NewUser extends ActionBarActivity {
@@ -58,6 +58,9 @@ public class NewUser extends ActionBarActivity {
 
         newUser_create_Btn = (Button) findViewById(R.id.newUser_create_Btn);
 
+        Firebase.setAndroidContext(this);
+        final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
+
         /*
             The listener just listens to the button Create, which sends the information to the Server
             the if verifies the passwords, if they match then it redirects to the main screen
@@ -78,21 +81,14 @@ public class NewUser extends ActionBarActivity {
                                     Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    ParseUser user = new ParseUser();
-                                    user.setUsername(username);
-                                    user.setPassword(password);
-                                    user.setEmail(email);
-                                    user.signUpInBackground(new SignUpCallback() {
+                                    fireBaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
                                         @Override
-                                        public void done(ParseException e) {
-                                            if (e == null) {
-                                                Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
-                                                //Change this due to the fact that there will be creation of groups
-                                                Intent intent = new Intent(NewUser.this, Groups.class);
-                                                startActivity(intent);
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
-                                            }
+                                        public void onSuccess(Map<String, Object> result) {
+                                            System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                                        }
+                                        @Override
+                                        public void onError(FirebaseError firebaseError) {
+                                            Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
