@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,10 +22,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddGroup extends ActionBarActivity{
@@ -45,6 +51,10 @@ public class AddGroup extends ActionBarActivity{
     Bitmap scaled;
     private Firebase ag_firebase_ref;
 
+    /* Strings*/
+    String email_user;
+    String username;
+
     byte[] arrayFoto;
 
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
@@ -53,6 +63,10 @@ public class AddGroup extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            email_user = extras.getString("email");
+        }
 
         ag_changepic_bt = (Button)findViewById(R.id.ag_changePic_BT);
         ag_groupPic_iv = (ImageView)findViewById(R.id.ag_groupPic_IV);
@@ -117,8 +131,42 @@ public class AddGroup extends ActionBarActivity{
                 if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
                     String nombre = ag_nombre_et.getText().toString();
                     String motto = ag_motto_et.getText().toString();
-                    ArrayList<String> userList = new ArrayList<String>();
+                    HashMap<String, String> userList = new HashMap<String, String>();
+                    Firebase ref = new Firebase(FIREBASE_URL + "users");
+                    final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+                    Query queryRef = ref.orderByChild("email").equalTo(email_user);
 
+                    queryRef.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                            Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
+                            username = value.get("user").toString();
+                            prefs.edit().putString("username", username).commit();
+                            System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+                    userList.put(email_user,username);
                     Grupo_Java grupo_java = new Grupo_Java(nombre,motto,userList);
                     ag_firebase_ref.push().setValue(grupo_java);
                     Intent intent = new Intent(AddGroup.this, Groups.class);

@@ -1,6 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by AlejandroSanchez on 4/25/15.
@@ -8,19 +8,19 @@ import java.util.ArrayList;
 public class Grupo_Java {
     String grupo_nombre;
     String grupo_motto;
-    ArrayList<String> grupo_usuarios;
+    HashMap<String,String> grupo_usuarios;
 
-    public Grupo_Java(String grupo_nombre,String grupo_motto, ArrayList<String> grupo_usuarios) {
+    public Grupo_Java(String grupo_nombre,String grupo_motto, HashMap<String,String> grupo_usuarios) {
         this.grupo_motto= grupo_motto;
         this.grupo_nombre = grupo_nombre;
         this.grupo_usuarios = grupo_usuarios;
     }
 
-    public ArrayList<String> getGrupo_usuarios() {
+    public HashMap<String,String> getGrupo_usuarios() {
         return grupo_usuarios;
     }
 
-    public void setGrupo_usuarios(ArrayList<String> grupo_usuarios) {
+    public void setGrupo_usuarios(HashMap<String, String> grupo_usuarios) {
         this.grupo_usuarios = grupo_usuarios;
     }
 

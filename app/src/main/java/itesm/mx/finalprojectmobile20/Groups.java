@@ -19,12 +19,17 @@ public class Groups extends ActionBarActivity {
 //    List<ParseObject> grupos = new ArrayList<ParseObject>();
 
     ArrayAdapter<String> adapter;
-
+    String groups_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null){
+            groups_email = extras.getString("email");
+        }
 
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
 
@@ -51,6 +56,7 @@ public class Groups extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuGroups_addGroup) {
             Intent intent = new Intent(Groups.this, AddGroup.class);
+            intent.putExtra("email",groups_email);
             startActivity(intent);
             return true;
         }
