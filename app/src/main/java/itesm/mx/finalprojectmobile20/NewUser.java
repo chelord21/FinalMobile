@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import itesm.mx.finalprojectmobile20.chat.ChatMain;
@@ -66,8 +65,8 @@ public class NewUser extends ActionBarActivity {
         newUser_create_Btn = (Button) findViewById(R.id.newUser_create_Btn);
 
         Firebase.setAndroidContext(this);
-        final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
         final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+        final Firebase fireBaseRef = new Firebase(FIREBASE_URL);
 
         /*
             The listener just listens to the button Create, which sends the information to the Server
@@ -101,11 +100,9 @@ public class NewUser extends ActionBarActivity {
                                     });
                                     User user = new User(username, email);
                                     user_firebase_ref = new Firebase(FIREBASE_URL).child("users");
-                                    Map<String, User> users = new HashMap<String, User>();
-                                    users.put(email, user);
-                                    user_firebase_ref.push().setValue(users);
+                                    user_firebase_ref.push().setValue(user);
                                     Intent userProf = new Intent(NewUser.this, ChatMain.class);
-                                    userProf.putExtra("email", email);
+                                    userProf.putExtra("email", user.getEmail());
                                     startActivity(userProf);
                                 }
                             }
