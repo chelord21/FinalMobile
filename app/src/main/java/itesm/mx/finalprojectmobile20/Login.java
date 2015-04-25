@@ -18,6 +18,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 
+
 public class Login extends ActionBarActivity {
     //Edit Text
     EditText login_username_ET;
@@ -64,6 +65,8 @@ public class Login extends ActionBarActivity {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
                                 Intent userProf = new Intent(Login.this, Groups.class);
+                                userProf.putExtra("email", username);
+
                                 startActivity(userProf);
                             }
                             @Override

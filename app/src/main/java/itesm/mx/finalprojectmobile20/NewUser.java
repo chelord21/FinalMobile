@@ -1,5 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -13,10 +14,16 @@ import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import itesm.mx.finalprojectmobile20.chat.ChatMain;
 
 
 public class NewUser extends ActionBarActivity {
+
+    //Firebase
+    private Firebase user_firebase_ref;
 
     //Edit Text
     /*
@@ -60,6 +67,7 @@ public class NewUser extends ActionBarActivity {
 
         Firebase.setAndroidContext(this);
         final Firebase fireBaseRef = new Firebase("https://hop-in.firebaseio.com/");
+        final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
         /*
             The listener just listens to the button Create, which sends the information to the Server
@@ -91,6 +99,14 @@ public class NewUser extends ActionBarActivity {
                                             Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                                    User user = new User(username, email);
+                                    user_firebase_ref = new Firebase(FIREBASE_URL).child("users");
+                                    Map<String, User> users = new HashMap<String, User>();
+                                    users.put(email, user);
+                                    user_firebase_ref.push().setValue(users);
+                                    Intent userProf = new Intent(NewUser.this, ChatMain.class);
+                                    userProf.putExtra("email", email);
+                                    startActivity(userProf);
                                 }
                             }
                             else{
