@@ -22,20 +22,20 @@
             android:layout_marginBottom="50dp" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/login_username_ET"
-            android:hint="@string/username"
+            android:hint="@string/enterEmail"
             android:layout_above="@+id/login_password_ET"
-            android:layout_gravity="center_horizontal" />
+            android:gravity="center_horizontal" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:id="@+id/login_password_ET"
             android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:hint="@string/password"
             android:layout_above="@+id/login_nuser_Btn"
             android:layout_marginBottom="50dp" />
