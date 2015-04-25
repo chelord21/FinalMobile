@@ -21,7 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class AddGroup extends ActionBarActivity{
@@ -40,8 +43,11 @@ public class AddGroup extends ActionBarActivity{
 
     /* Images */
     Bitmap scaled;
+    private Firebase ag_firebase_ref;
 
     byte[] arrayFoto;
+
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,7 @@ public class AddGroup extends ActionBarActivity{
         ag_save_bt = (Button)findViewById(R.id.ag_save_BT);
         ag_nombre_et = (EditText)findViewById(R.id.ag_groupName_ET);
         ag_motto_et = (EditText)findViewById(R.id.ag_groupMotto_ET);
-
+        ag_firebase_ref = new Firebase(FIREBASE_URL).child("group");
 
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
 
@@ -74,8 +80,8 @@ public class AddGroup extends ActionBarActivity{
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-
                                 startActivityForResult(intent, 1);
+
                             } catch (ActivityNotFoundException e) {
                                 Log.e(TAG, "No camera: " + e);
                             } catch (Exception e) {
@@ -109,6 +115,12 @@ public class AddGroup extends ActionBarActivity{
                 */
 
                 if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
+                    String nombre = ag_nombre_et.getText().toString();
+                    String motto = ag_motto_et.getText().toString();
+                    ArrayList<String> userList = new ArrayList<String>();
+
+                    Grupo_Java grupo_java = new Grupo_Java(nombre,motto,userList);
+                    ag_firebase_ref.push().setValue(grupo_java);
                     Intent intent = new Intent(AddGroup.this, Groups.class);
                     startActivity(intent);
                 }

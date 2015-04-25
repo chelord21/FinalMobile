@@ -115,7 +115,7 @@ public class ChatMain extends ActionBarActivity {
         if (chat_username_S == null) {
             Random r = new Random();
             // Assign a random user name if we don't have one saved.
-            chat_username_S = "JavaUser" + r.nextInt(100000);
+            chat_username_S = "HopInUser" + r.nextInt(100000);
             prefs.edit().putString("username", chat_username_S).commit();
         }
         */
