@@ -76,6 +76,11 @@ public class Groups extends ActionBarActivity {
             startActivity(intent);
             return true;
         }
+        if (id == R.id.menuGroups_addGroup) {
+            Intent intent = new Intent(Groups.this, userProfile.class);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
