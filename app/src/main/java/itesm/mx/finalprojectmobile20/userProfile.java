@@ -23,7 +23,7 @@ import android.widget.TextView;
 import java.io.File;
 
 
-public class userProfile extends ActionBarActivity {
+public class UserProfile extends ActionBarActivity {
     private static final String TAG = "";
 
     //TextViews
@@ -66,7 +66,7 @@ public class userProfile extends ActionBarActivity {
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(userProfile.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
                 builder.setTitle("Edit Photo");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override

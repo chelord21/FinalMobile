@@ -77,7 +77,7 @@ public class Groups extends ActionBarActivity {
             return true;
         }
         if (id == R.id.menuGroups_userProfile) {
-            Intent intent = new Intent(Groups.this, userProfile.class);
+            Intent intent = new Intent(Groups.this, UserProfile.class);
             startActivity(intent);
             return true;
         }
