@@ -3,7 +3,6 @@ package itesm.mx.finalprojectmobile20;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -15,15 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-
-import java.util.Map;
-
-import itesm.mx.finalprojectmobile20.chat.ChatMain;
 
 
 public class Login extends ActionBarActivity {
@@ -32,7 +24,6 @@ public class Login extends ActionBarActivity {
     EditText login_password_ET;
 
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
-    String username;
     String email;
 
     //Image views
@@ -66,19 +57,16 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.login_Log_Btn:
-                        username = login_username_ET.getText().toString();
+                        email = login_username_ET.getText().toString();
                         String password = login_password_ET.getText().toString();
-
-                        getUsername();
 
                         fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                                Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                Intent userProf = new Intent(Login.this, ChatMain.class);
-                                userProf.putExtra("email", username);
-
+                                Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
+                                Intent userProf = new Intent(Login.this, Groups.class);
+                                userProf.putExtra("email", email);
                                 startActivity(userProf);
                             }
                             @Override
@@ -133,42 +121,6 @@ public class Login extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    private void getUsername() {
-
-        Firebase ref = new Firebase(FIREBASE_URL + "users");
-        final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
-        Query queryRef = ref.orderByChild("user").equalTo(username);
-
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
-
-                email = value.get("email").toString();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
     }
 
     @Override
