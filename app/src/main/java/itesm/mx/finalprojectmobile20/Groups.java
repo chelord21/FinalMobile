@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import itesm.mx.finalprojectmobile20.chat.ChatMain;
 
 
 public class Groups extends ActionBarActivity {
@@ -34,7 +38,19 @@ public class Groups extends ActionBarActivity {
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
 
         nombres = new ArrayList<String>();
+        final Button chat = (Button) findViewById(R.id.groups_chat_Btn);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(chat.isPressed()){
+                    Intent intent = new Intent(Groups.this, ChatMain.class);
+                    intent.putExtra("email", groups_email);
+                    startActivity(intent);
+                }
+            }
+        };
 
+        chat.setOnClickListener(listener);
 
     }
 
