@@ -44,5 +44,6 @@
     <string name="menuGroup_addEvent">Add Event</string>
     <string name="menuGroup_modifyGroup">Modify group</string>
     <string name="title_activity_chat_main">chatMain</string>
+    <string name="enterEmail">Enter email</string>
 
 </resources>
