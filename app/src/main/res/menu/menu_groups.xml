@@ -6,4 +6,8 @@
 
     <item android:id="@+id/menuGroups_addGroup" android:title="@string/addGroup"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/menuGroups_userProfile" android:title="@string/modifyProfile"
+        android:orderInCategory="100" app:showAsAction="never" />
+
 </menu>
