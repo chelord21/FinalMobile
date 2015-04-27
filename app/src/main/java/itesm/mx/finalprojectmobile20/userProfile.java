@@ -110,13 +110,6 @@ public class UserProfile extends ActionBarActivity {
         });
     }
 
-//    @Override
-//    public void onBackPressed(){
-//        Intent intent=new Intent(getApplicationContext(),Login.class);
-//        Toast.makeText(getApplicationContext(), "Works", Toast.LENGTH_SHORT).show();
-//        startActivity(intent);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
