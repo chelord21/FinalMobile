@@ -107,18 +107,6 @@ public class ChatMain extends ActionBarActivity {
 
             }
         });
-
-        /*
-        SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
-        chat_username_S = prefs.getString("username", null);
-        //If the user is null it assigns a random user
-        if (chat_username_S == null) {
-            Random r = new Random();
-            // Assign a random user name if we don't have one saved.
-            chat_username_S = "HopInUser" + r.nextInt(100000);
-            prefs.edit().putString("username", chat_username_S).commit();
-        }
-        */
     }
 
 
