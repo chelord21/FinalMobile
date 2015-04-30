@@ -79,7 +79,6 @@ public class UserProfile extends ActionBarActivity {
         setUsername();
 
         userProfile_email_TV.setText(user_email_S);
-        userProfile_username_TV.setText(userProfile_username_S);
 
         //Crear el de firebase
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
@@ -143,6 +142,7 @@ public class UserProfile extends ActionBarActivity {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
                 userProfile_username_S = value.get("user").toString();
                 System.out.println("user is " + userProfile_username_S);
+                userProfile_username_TV.setText(userProfile_username_S);
             }
 
             @Override

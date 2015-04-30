@@ -25,7 +25,6 @@ import itesm.mx.finalprojectmobile20.R;
 
 public class ChatMain extends ActionBarActivity {
 
-
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     private String chat_username_S;
@@ -35,7 +34,6 @@ public class ChatMain extends ActionBarActivity {
     private ChatListAdapter chat_listAdapter_LA;
 
     EditText chat_input_ET;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +64,7 @@ public class ChatMain extends ActionBarActivity {
                 sendMessage();
             }
         });
-
     }
-
 
     private void setUsername() {
         //User name set
@@ -83,7 +79,7 @@ public class ChatMain extends ActionBarActivity {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
                 chat_username_S = value.get("user").toString();
                 prefs.edit().putString("username", chat_username_S).commit();
-                System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
+                System.out.println("user is " + value.get("user"));
             }
 
             @Override
@@ -108,7 +104,6 @@ public class ChatMain extends ActionBarActivity {
         });
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -131,9 +126,9 @@ public class ChatMain extends ActionBarActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 boolean connected = (Boolean) dataSnapshot.getValue();
                 if (connected) {
-                    Toast.makeText(ChatMain.this, "Connected to Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatMain.this, "Chat is Online", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ChatMain.this, "Disconnected from Firebase", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatMain.this, "Chat is Offline", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -158,7 +153,7 @@ public class ChatMain extends ActionBarActivity {
             // Create our 'model', a Chat object
             Chat chat = new Chat(input, chat_username_S);
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            chat_firebase_ref.push().setValue(chat);
+            chat_firebase_ref.child(chat_username_S + Math.random()).push().setValue(chat);
             inputText.setText("");
         }
     }

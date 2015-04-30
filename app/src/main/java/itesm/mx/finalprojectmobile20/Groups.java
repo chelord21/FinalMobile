@@ -10,6 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.util.ArrayList;
 
 import itesm.mx.finalprojectmobile20.chat.ChatMain;
@@ -23,7 +28,9 @@ public class Groups extends ActionBarActivity {
 //    List<ParseObject> grupos = new ArrayList<ParseObject>();
 
     ArrayAdapter<String> adapter;
-    String groups_email;
+    String user_email;
+    Firebase ref = new Firebase("https://hop-in.firebaseio.com/group");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +39,7 @@ public class Groups extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){
-            groups_email = extras.getString("email");
+            user_email = extras.getString("email");
         }
 
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
@@ -44,18 +51,31 @@ public class Groups extends ActionBarActivity {
             public void onClick(View v) {
                 if(chat.isPressed()){
                     Intent intent = new Intent(Groups.this, ChatMain.class);
-                    intent.putExtra("email", groups_email);
+                    intent.putExtra("email", user_email);
                     startActivity(intent);
                 }
             }
         };
 
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println(dataSnapshot.getValue());
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
         chat.setOnClickListener(listener);
 
-    }
+     }
 
 
-    @Override
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_groups, menu);
@@ -72,12 +92,13 @@ public class Groups extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuGroups_addGroup) {
             Intent intent = new Intent(Groups.this, AddGroup.class);
-            intent.putExtra("email",groups_email);
+            intent.putExtra("email", user_email);
             startActivity(intent);
             return true;
         }
         if (id == R.id.menuGroups_userProfile) {
             Intent intent = new Intent(Groups.this, UserProfile.class);
+            intent.putExtra("email", user_email);
             startActivity(intent);
             return true;
         }
