@@ -43,7 +43,6 @@ public class ChatMain extends ActionBarActivity {
         setContentView(R.layout.activity_chat_main);
 
         Bundle extras = getIntent().getExtras();
-
         if (extras != null) {
             user_email_S = extras.getString("email");
         }

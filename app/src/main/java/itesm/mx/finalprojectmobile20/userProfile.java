@@ -20,7 +20,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+
 import java.io.File;
+import java.util.Map;
 
 
 public class UserProfile extends ActionBarActivity {
@@ -50,6 +57,10 @@ public class UserProfile extends ActionBarActivity {
     //Listeners
     View.OnClickListener userProfile_listener_OCL;
 
+    //Strings
+    private String user_email_S;
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+    private String userProfile_username_S;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,16 @@ public class UserProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
         userProfile_edit_Btn = (Button) findViewById(R.id.userProf_edit_Btn);
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            user_email_S = extras.getString("email");
+        }
+
+        setUsername();
+
+        userProfile_email_TV.setText(user_email_S);
+        userProfile_username_TV.setText(userProfile_username_S);
 
         //Crear el de firebase
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
@@ -106,6 +127,42 @@ public class UserProfile extends ActionBarActivity {
                     }
                 });
                 builder.show();
+            }
+        });
+    }
+
+    private void setUsername() {
+        //User name set
+
+        Firebase ref = new Firebase(FIREBASE_URL + "users");
+        Query queryRef = ref.orderByChild("email").equalTo(user_email_S);
+
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
+                userProfile_username_S = value.get("user").toString();
+                System.out.println("user is " + userProfile_username_S);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }

@@ -71,7 +71,7 @@ public class Login extends ActionBarActivity {
                             }
                             @Override
                             public void onAuthenticationError(FirebaseError firebaseError) {
-                                Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
 
