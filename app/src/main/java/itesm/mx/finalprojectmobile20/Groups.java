@@ -78,6 +78,7 @@ public class Groups extends ActionBarActivity {
         }
         if (id == R.id.menuGroups_userProfile) {
             Intent intent = new Intent(Groups.this, UserProfile.class);
+            intent.putExtra("email",groups_email);
             startActivity(intent);
             return true;
         }
