@@ -19,13 +19,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="50dp" />
+            android:layout_marginBottom="20dp" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/login_username_ET"
             android:hint="@string/enterEmail"
+            android:inputType="textEmailAddress"
             android:layout_above="@+id/login_password_ET"
             android:gravity="center_horizontal" />
 
