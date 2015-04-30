@@ -22,12 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -37,7 +34,7 @@ import com.firebase.client.Query;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -139,7 +136,7 @@ public class AddGroup extends ActionBarActivity{
                 if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
                     String nombre = ag_nombre_et.getText().toString();
                     String motto = ag_motto_et.getText().toString();
-                    HashMap<String, String> userList = new HashMap<String, String>();
+                    ArrayList<String> usuarios;
                     Firebase ref = new Firebase(FIREBASE_URL + "users");
                     final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
                     Query queryRef = ref.orderByChild("email").equalTo(email_user);
@@ -173,20 +170,10 @@ public class AddGroup extends ActionBarActivity{
 
                         }
                     });
-
-                    userList.put(username,email_user);
-                    Grupo_Java grupo_java = new Grupo_Java(nombre,motto,userList);
-                    ObjectMapper mapper = new ObjectMapper();
-                    mapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
-                    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-                    mapper.getSerializerProvider().setNullKeySerializer(new MyNullKeySerializer());
-                    String json = null;
-                    try {
-                        json = mapper.writeValueAsString(grupo_java);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                    ag_firebase_ref.push().setValue(json);
+                    usuarios = new ArrayList<>();
+                    usuarios.add(email_user);
+                    Grupo_Java grupo_java = new Grupo_Java(nombre,motto, usuarios);
+                    ag_firebase_ref.push().setValue(grupo_java);
                     Intent intent = new Intent(AddGroup.this, Groups.class);
                     startActivity(intent);
                 }
