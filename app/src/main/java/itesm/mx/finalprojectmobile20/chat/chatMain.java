@@ -153,7 +153,7 @@ public class ChatMain extends ActionBarActivity {
             // Create our 'model', a Chat object
             Chat chat = new Chat(input, chat_username_S);
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            chat_firebase_ref.push().setValue(chat);
+            chat_firebase_ref.child(chat_username_S + Math.random()).push().setValue(chat);
             inputText.setText("");
         }
     }
