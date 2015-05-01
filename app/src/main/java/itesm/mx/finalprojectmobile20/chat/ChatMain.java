@@ -48,20 +48,23 @@ public class ChatMain extends ActionBarActivity {
         setUsername();
         chat_firebase_ref = new Firebase(FIREBASE_URL).child("chat");
         chat_input_ET = (EditText) findViewById(R.id.messageInput);
-        chat_input_ET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_NULL && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    sendMessage();
-                }
-                return true;
-            }
-        });
 
         findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();
+            }
+        });
+
+        chat_input_ET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMessage();
+                    handled = true;
+                }
+                return handled;
             }
         });
     }
