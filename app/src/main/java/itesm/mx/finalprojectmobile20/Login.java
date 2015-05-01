@@ -5,12 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -113,6 +116,35 @@ public class Login extends ActionBarActivity {
 
         login_login_Btn.setOnClickListener(login_buttonsListener_VOL);
         login_newUser_Btn.setOnClickListener(login_buttonsListener_VOL);
+
+        EditText editText = (EditText) findViewById(R.id.login_password_ET);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    email = login_username_ET.getText().toString();
+                    String password = login_password_ET.getText().toString();
+
+                    fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                        @Override
+                        public void onAuthenticated(AuthData authData) {
+                            System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                            Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
+                            Intent userProf = new Intent(Login.this, Groups.class);
+                            userProf.putExtra("email", email);
+                            startActivity(userProf);
+                        }
+                        @Override
+                        public void onAuthenticationError(FirebaseError firebaseError) {
+                            Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
 
