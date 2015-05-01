@@ -34,12 +34,18 @@
     <string name="title_activity_addgroup">Add Group</string>
     <string name="title_activity_add_friends">AddFriends</string>
     <string name="addGroup">Add Group</string>
-    <string name="menuGroup_addFriend">Add Friend</string>
+    <string name="mg_addFriend">Add Friend</string>
     <string name="menuGroup_addEvent">Add Event</string>
     <string name="menuGroup_modifyGroup">Modify group</string>
     <string name="title_activity_chat_main">chatMain</string>
     <string name="enterEmail">Enter email</string>
     <string name="modifyProfile">User profile</string>
     <string name="up_saveProfile_BT">Save Photo</string>
+    <string name="title_activity_manage_group">ManageGroup</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="mg_groupName">Group name</string>
+    <string name="mg_groupMotto_TV">Group motto</string>
+    <string name="mg_saveChanges">Save changes</string>
+    <string name="mg_members_TV">Members</string>
 
 </resources>

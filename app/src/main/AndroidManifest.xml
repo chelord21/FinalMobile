@@ -49,6 +49,10 @@
             android:name=".chat.ChatMain"
             android:label="@string/title_activity_chat_main" >
         </activity>
+        <activity
+            android:name=".ManageGroup"
+            android:label="@string/title_activity_manage_group" >
+        </activity>
     </application>
 
 </manifest>

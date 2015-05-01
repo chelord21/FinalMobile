@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="itesm.mx.finalprojectmobile20.Group">
 
-    <item android:id="@+id/menuGroup_addFriend" android:title="@string/menuGroup_addFriend"
-        android:orderInCategory="100" app:showAsAction="never" />
-
     <item android:id="@+id/menuGroup_addEvent" android:title="@string/menuGroup_addEvent"
         android:orderInCategory="100" app:showAsAction="never" />
 
