@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -147,9 +148,9 @@ public class UserProfile extends ActionBarActivity {
                 userID = snapshot.getKey();
                 userProfile_username_S = value.get("user").toString();
 
-                //byte[] imageByteArray = Base64.decode(value.get("image").toString());
+                byte[] imageByteArray = decodeImage(value.get("image").toString());
 
-                //userProfile_profile_IV.setImageBitmap(BitmapFactory.decodeByteArray(imageByteArray));
+                userProfile_profile_IV.setImageBitmap(BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length));
 
                 System.out.println("user is " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);
@@ -226,23 +227,23 @@ public class UserProfile extends ActionBarActivity {
         image.compress(Bitmap.CompressFormat.PNG, 0, stream);
         byte[] imageArray = stream.toByteArray();
 
-        //String imageDataString = encodeImage(imageArray);
+        String imageDataString = encodeImage(imageArray);
 
         Firebase ref = new Firebase(FIREBASE_URL + "users");
         Map<String, Object> imageString = new HashMap<String, Object>();
-        //imageString.put("image", imageDataString);
+        imageString.put("image", imageDataString);
         ref.child(userID).updateChildren(imageString);
     }
 
-    /*
-    public static String encodeImage(byte[] imageByteArray){
-        return Base64.encodeBase64URLSafeString(imageByteArray);
-    }*/
 
-    /*
+    public static String encodeImage(byte[] imageByteArray){
+        return Base64.encodeToString(imageByteArray, Base64.DEFAULT);
+    }
+
+
     public static byte[] decodeImage(String imageDataString) {
-        return Base64.decodeBase64(imageDataString);
-    } */
+        return Base64.decode(imageDataString, Base64.DEFAULT);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
