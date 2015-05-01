@@ -6,6 +6,7 @@ package itesm.mx.finalprojectmobile20;
 public class User {
     private String user;
     private String email;
+    private String profile;
 
     private User() {
     }
@@ -22,4 +23,8 @@ public class User {
     public String getUser() {
         return user;
     }
+
+    public void setProfile(String profile) { this.profile = profile; }
+
+    public String getProfile() { return profile; }
 }
