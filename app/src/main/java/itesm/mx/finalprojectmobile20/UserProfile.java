@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -148,9 +149,14 @@ public class UserProfile extends ActionBarActivity {
                 userID = snapshot.getKey();
                 userProfile_username_S = value.get("user").toString();
 
-                byte[] imageByteArray = decodeImage(value.get("image").toString());
+                byte[] imageByteArray;
 
-                userProfile_profile_IV.setImageBitmap(BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length));
+                try{
+                    imageByteArray = decodeImage(value.get("image").toString());
+                    userProfile_profile_IV.setImageBitmap(BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length));
+                }catch(NullPointerException e){
+                    Toast.makeText(UserProfile.this, "Error, no image to retrive", Toast.LENGTH_SHORT).show();
+                }
 
                 System.out.println("user is " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);

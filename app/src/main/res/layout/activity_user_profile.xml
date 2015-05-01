@@ -55,10 +55,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Edit Photo"
+        android:layout_marginTop="47dp"
+        android:id="@+id/userProf_edit_Btn"
         android:layout_below="@+id/userProf_email_TV"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:id="@+id/userProf_edit_Btn" />
+        android:layout_toLeftOf="@+id/userProf_email_TV"
+        android:layout_toStartOf="@+id/userProf_email_TV" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/up_saveProfile_BT"
+        android:id="@+id/userProf_save_BT"
+        android:layout_alignTop="@+id/userProf_edit_Btn"
+        android:layout_toRightOf="@+id/userProf_usernameTitle_TV"
+        android:layout_toEndOf="@+id/userProf_usernameTitle_TV" />
 
 
 </RelativeLayout>
