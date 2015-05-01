@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Titles -->
     <string name="app_name">Hop-In</string>
     <string name="action_settings">Settings</string>
     <string name="username">Enter username</string>
@@ -8,23 +9,16 @@
     <string name="New_user">New User</string>
     <string name="Log_In">Login</string>
     <string name="title_activity_new_user">NewUser</string>
-    <string name="hello_world">Hello world!</string>
     <string name="username_newUser">Username</string>
     <string name="email">Email</string>
     <string name="passwordNewUser">Password</string>
     <string name="create">Create</string>
     <string name="Repeat_pass">Repeate Password</string>
-    <string name="title_activity_user_profile">userProfile</string>
+    <string name="title_activity_user_profile">Profile</string>
     <string name="Back">Back</string>
-    <string name="title_activity_grupos">Grupos</string>
-    <string name="title_section1">User Profile</string>
-    <string name="title_section2">See Change</string>
+    <string name="title_activity_grupos">Groups</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
-    <string name="title_activity_chats">Chats</string>
-    <string name="title_section3">Section 3</string>
-    <string name="chats_title_section1">Intial</string>
     <string name="chats_title_section2">Add Users</string>
     <string name="chats_title_section3">Add Events</string>
     <string name="title_activity_active__chat">Active_Chat</string>
@@ -40,11 +34,18 @@
     <string name="title_activity_addgroup">Add Group</string>
     <string name="title_activity_add_friends">AddFriends</string>
     <string name="addGroup">Add Group</string>
-    <string name="menuGroup_addFriend">Add Friend</string>
+    <string name="mg_addFriend">Add Friend</string>
     <string name="menuGroup_addEvent">Add Event</string>
     <string name="menuGroup_modifyGroup">Modify group</string>
     <string name="title_activity_chat_main">chatMain</string>
     <string name="enterEmail">Enter email</string>
     <string name="modifyProfile">User profile</string>
+    <string name="up_saveProfile_BT">Save Photo</string>
+    <string name="title_activity_manage_group">ManageGroup</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="mg_groupName">Group name</string>
+    <string name="mg_groupMotto_TV">Group motto</string>
+    <string name="mg_saveChanges">Save changes</string>
+    <string name="mg_members_TV">Members</string>
 
 </resources>

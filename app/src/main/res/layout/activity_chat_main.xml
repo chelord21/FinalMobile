@@ -24,16 +24,17 @@
         <EditText
             android:id="@+id/messageInput"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:inputType="textShortMessage"
+            android:inputType="text"
             android:lines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:imeOptions="actionSend"/>
 
         <ImageButton
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:src="@android:drawable/ic_menu_send" />
     </LinearLayout>
 

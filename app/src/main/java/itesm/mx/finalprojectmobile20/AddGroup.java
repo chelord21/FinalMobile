@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,6 +54,7 @@ public class AddGroup extends ActionBarActivity{
     /* Images */
     Bitmap scaled;
     private Firebase ag_firebase_ref;
+    String imageString;
 
     /* Strings*/
     String email_user;
@@ -138,7 +138,6 @@ public class AddGroup extends ActionBarActivity{
                     String motto = ag_motto_et.getText().toString();
                     ArrayList<String> usuarios;
                     Firebase ref = new Firebase(FIREBASE_URL + "users");
-                    final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
                     Query queryRef = ref.orderByChild("email").equalTo(email_user);
 
                     queryRef.addChildEventListener(new ChildEventListener() {
@@ -146,7 +145,6 @@ public class AddGroup extends ActionBarActivity{
                         public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                             Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
                             username = value.get("user").toString();
-                            prefs.edit().putString("username", username).commit();
                             System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
                         }
 
@@ -172,7 +170,7 @@ public class AddGroup extends ActionBarActivity{
                     });
                     usuarios = new ArrayList<>();
                     usuarios.add(email_user);
-                    Grupo_Java grupo_java = new Grupo_Java(nombre,motto, usuarios);
+                    Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
                     ag_firebase_ref.push().setValue(grupo_java);
                     Intent intent = new Intent(AddGroup.this, Groups.class);
                     startActivity(intent);
