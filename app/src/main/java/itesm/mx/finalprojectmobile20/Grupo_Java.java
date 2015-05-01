@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class Grupo_Java {
     String grupo_nombre;
     String grupo_motto;
-
     ArrayList<String> grupo_users;
+
+    private Grupo_Java() {
+    }
 
     public Grupo_Java(String grupo_nombre,String grupo_motto, ArrayList<String> grupo_users) {
         this.grupo_motto= grupo_motto;
@@ -24,6 +26,7 @@ public class Grupo_Java {
     public void setGrupo_users(ArrayList<String> grupo_users) {
         this.grupo_users = grupo_users;
     }
+
     public String getGrupo_nombre() {
         return grupo_nombre;
     }
