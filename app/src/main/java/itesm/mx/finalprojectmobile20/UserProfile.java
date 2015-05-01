@@ -50,6 +50,7 @@ public class UserProfile extends ActionBarActivity {
 
     //Buttons
     Button userProfile_edit_Btn;
+    Button userProdile_save_Btn;
 
     //ImageView
     ImageView userProfile_profile_IV;
@@ -60,6 +61,9 @@ public class UserProfile extends ActionBarActivity {
 
     //String
     String userID;
+
+    //Boolean
+    Boolean changesFlag;
 
     //Listeners
     View.OnClickListener userProfile_listener_OCL;
@@ -77,6 +81,9 @@ public class UserProfile extends ActionBarActivity {
         userProfile_email_TV = (TextView) findViewById(R.id.userProf_email_TV);
         userProfile_edit_Btn = (Button) findViewById(R.id.userProf_edit_Btn);
         userProfile_profile_IV = (ImageView) findViewById(R.id.userProf_profile_IV);
+        userProdile_save_Btn = (Button) findViewById(R.id.userProf_save_BT);
+
+        changesFlag = false;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -92,6 +99,8 @@ public class UserProfile extends ActionBarActivity {
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changesFlag = true;
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(UserProfile.this);
                 builder.setTitle("Edit Photo");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -134,6 +143,23 @@ public class UserProfile extends ActionBarActivity {
                 builder.show();
             }
         });
+
+        userProdile_save_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveImage(scaled);
+                changesFlag = false;
+                Toast.makeText(UserProfile.this, "Image Saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (changesFlag) {
+            Toast.makeText(UserProfile.this, "Image was not saved", Toast.LENGTH_SHORT).show();
+        }
+        super.onBackPressed();
     }
 
     private void setUser() {
@@ -204,10 +230,6 @@ public class UserProfile extends ActionBarActivity {
                             bitmapOptions);
                     int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
                     scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
-
-                    saveImage(scaled);
-
-                    userProfile_profile_IV.setImageBitmap(scaled);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -219,12 +241,10 @@ public class UserProfile extends ActionBarActivity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
-                Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
-
-                saveImage(thumbnail);
-
-                userProfile_profile_IV.setImageBitmap(thumbnail);
+                scaled = (BitmapFactory.decodeFile(picturePath));
             }
+
+            userProfile_profile_IV.setImageBitmap(scaled);
         }
     }
 
