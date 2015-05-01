@@ -26,7 +26,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -54,6 +56,9 @@ public class UserProfile extends ActionBarActivity {
     // Bitmap
     Bitmap scaled;
 
+    //String
+    String userID;
+
     //Listeners
     View.OnClickListener userProfile_listener_OCL;
 
@@ -76,11 +81,10 @@ public class UserProfile extends ActionBarActivity {
             user_email_S = extras.getString("email");
         }
 
-        setUsername();
+        setUser();
 
         userProfile_email_TV.setText(user_email_S);
 
-        //Crear el de firebase
         final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
 
         userProfile_edit_Btn.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +134,7 @@ public class UserProfile extends ActionBarActivity {
         });
     }
 
-    private void setUsername() {
+    private void setUser() {
         //User name set
 
         Firebase ref = new Firebase(FIREBASE_URL + "users");
@@ -140,7 +144,13 @@ public class UserProfile extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
+                userID = snapshot.getKey();
                 userProfile_username_S = value.get("user").toString();
+
+                //byte[] imageByteArray = Base64.decode(value.get("image").toString());
+
+                //userProfile_profile_IV.setImageBitmap(BitmapFactory.decodeByteArray(imageByteArray));
+
                 System.out.println("user is " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);
             }
@@ -188,6 +198,8 @@ public class UserProfile extends ActionBarActivity {
                     int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
                     scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
 
+                    saveImage(scaled);
+
                     userProfile_profile_IV.setImageBitmap(scaled);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -201,10 +213,36 @@ public class UserProfile extends ActionBarActivity {
                 String picturePath = c.getString(columnIndex);
                 c.close();
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+
+                saveImage(thumbnail);
+
                 userProfile_profile_IV.setImageBitmap(thumbnail);
             }
         }
     }
+
+    private void saveImage(Bitmap image) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        byte[] imageArray = stream.toByteArray();
+
+        //String imageDataString = encodeImage(imageArray);
+
+        Firebase ref = new Firebase(FIREBASE_URL + "users");
+        Map<String, Object> imageString = new HashMap<String, Object>();
+        //imageString.put("image", imageDataString);
+        ref.child(userID).updateChildren(imageString);
+    }
+
+    /*
+    public static String encodeImage(byte[] imageByteArray){
+        return Base64.encodeBase64URLSafeString(imageByteArray);
+    }*/
+
+    /*
+    public static byte[] decodeImage(String imageDataString) {
+        return Base64.decodeBase64(imageDataString);
+    } */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
