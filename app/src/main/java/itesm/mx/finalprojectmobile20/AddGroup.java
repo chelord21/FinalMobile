@@ -170,7 +170,7 @@ public class AddGroup extends ActionBarActivity{
                     });
                     usuarios = new ArrayList<>();
                     usuarios.add(email_user);
-                    Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios, imageString);
+                    Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
                     ag_firebase_ref.push().setValue(grupo_java);
                     Intent intent = new Intent(AddGroup.this, Groups.class);
                     startActivity(intent);
