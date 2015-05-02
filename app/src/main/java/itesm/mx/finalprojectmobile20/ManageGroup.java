@@ -1,13 +1,17 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ManageGroup extends ActionBarActivity {
@@ -34,5 +38,40 @@ public class ManageGroup extends ActionBarActivity {
         groupName_TV = (TextView)findViewById(R.id.mg_groupname_TV);
         groupMotto_TV = (TextView)findViewById(R.id.mg_groupMotto_TV);
         members = (ListView)findViewById(R.id.mg_members_LV);
+
+
+        addFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder alert = new AlertDialog.Builder(ManageGroup.this);
+                alert.setTitle("Type your mail");
+                final EditText input = new EditText(ManageGroup.this);
+                alert.setView(input);
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        final String username = input.getText().toString();
+                        Toast.makeText(getApplicationContext(),
+                                "Please wait",
+                                Toast.LENGTH_SHORT).show();
+
+                        /* Verificar que el usuario exista y mostrar un mensaje de "Usuario encontrado o algo así" */
+
+
+
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(getApplicationContext(),
+                                "Canceled",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog alertDialog = alert.create();
+                alertDialog.show();
+            }
+        });
     }
 }

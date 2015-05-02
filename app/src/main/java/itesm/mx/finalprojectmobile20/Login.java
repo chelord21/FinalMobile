@@ -99,6 +99,22 @@ public class Login extends ActionBarActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         final String mail = input.getText().toString();
 
+                        Firebase.ResultHandler handler = new Firebase.ResultHandler() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Email has been sent",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Oops, there was an error. Please try again",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        fireBaseRef.resetPassword(mail, handler);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
