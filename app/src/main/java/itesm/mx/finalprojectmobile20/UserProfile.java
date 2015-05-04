@@ -196,7 +196,7 @@ public class UserProfile extends ActionBarActivity {
                     Toast.makeText(UserProfile.this, "Error, no image to retrive", Toast.LENGTH_SHORT).show();
                 }
 
-                System.out.println("user is " + userProfile_username_S);
+                System.out.println("User: " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);
             }
 
