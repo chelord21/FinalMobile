@@ -28,18 +28,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mg_groupName"
-            android:id="@+id/mg_groupname_TV"
+            android:id="@+id/mg_groupnameTitle_TV"
             android:layout_marginTop="33dp"
             android:layout_below="@+id/mg_profile_IV"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal" />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Type new group name"
+            android:hint=""
             android:id="@+id/mg_groupName_ET"
-            android:layout_below="@+id/mg_groupname_TV"
+            android:layout_below="@+id/mg_groupnameTitle_TV"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"/>
@@ -48,19 +48,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mg_groupMotto_TV"
-            android:id="@+id/mg_groupMotto_TV"
+            android:id="@+id/mg_groupMottoTitle_TV"
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_alignRight="@+id/mg_groupname_TV"
             android:layout_alignEnd="@+id/mg_groupname_TV" />
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Type new group motto"
+            android:hint=""
             android:id="@+id/mg_groupMotto_ET"
             android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/mg_groupMotto_TV"
+            android:layout_below="@+id/mg_groupMottoTitle_TV"
             android:layout_alignRight="@+id/mg_groupName_ET"
             android:layout_alignEnd="@+id/mg_groupName_ET" />
 

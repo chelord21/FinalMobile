@@ -2,11 +2,14 @@ package itesm.mx.finalprojectmobile20;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -132,51 +135,53 @@ public class AddGroup extends ActionBarActivity{
                 scaled.compress(Bitmap.CompressFormat.PNG, 0, stream);
                 arrayFoto = stream.toByteArray();
                 */
+                if(isNetworkConnected()) {
+                    if (!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
+                        String nombre = ag_nombre_et.getText().toString();
+                        String motto = ag_motto_et.getText().toString();
+                        ArrayList<String> usuarios;
+                        Firebase ref = new Firebase(FIREBASE_URL + "users");
+                        Query queryRef = ref.orderByChild("email").equalTo(email_user);
 
-                if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
-                    String nombre = ag_nombre_et.getText().toString();
-                    String motto = ag_motto_et.getText().toString();
-                    ArrayList<String> usuarios;
-                    Firebase ref = new Firebase(FIREBASE_URL + "users");
-                    Query queryRef = ref.orderByChild("email").equalTo(email_user);
+                        queryRef.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                                Map<String, Object> value = (Map<String, Object>) snapshot.getValue();
+                                username = value.get("user").toString();
+                                System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
+                            }
 
-                    queryRef.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                            Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
-                            username = value.get("user").toString();
-                            System.out.println(snapshot.getKey() + " was " + value.get("user") + " meters tall");
-                        }
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            }
 
-                        }
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            }
 
-                        }
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                            }
 
-                        }
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-
-                        }
-                    });
-                    usuarios = new ArrayList<>();
-                    usuarios.add(email_user);
-                    Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
-                    ag_firebase_ref.push().setValue(grupo_java);
-                    Intent intent = new Intent(AddGroup.this, Groups.class);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        usuarios = new ArrayList<>();
+                        usuarios.add(email_user);
+                        Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
+                        ag_firebase_ref.push().setValue(grupo_java);
+                        Intent intent = new Intent(AddGroup.this, Groups.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(AddGroup.this, "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -252,5 +257,15 @@ public class AddGroup extends ActionBarActivity{
          {
             jsonGenerator.writeFieldName("");
         }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }

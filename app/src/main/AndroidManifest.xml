@@ -53,6 +53,10 @@
             android:name=".ManageGroup"
             android:label="@string/title_activity_manage_group" >
         </activity>
+        <activity
+            android:name=".AddEvent"
+            android:label="@string/title_activity_add_event" >
+        </activity>
     </application>
 
 </manifest>

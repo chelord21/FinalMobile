@@ -47,5 +47,6 @@
     <string name="mg_groupMotto_TV">Group motto</string>
     <string name="mg_saveChanges">Save changes</string>
     <string name="mg_members_TV">Members</string>
+    <string name="title_activity_add_event">AddEvent</string>
 
 </resources>
