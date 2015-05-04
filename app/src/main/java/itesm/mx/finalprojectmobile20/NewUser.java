@@ -16,8 +16,6 @@ import com.firebase.client.FirebaseError;
 
 import java.util.Map;
 
-import itesm.mx.finalprojectmobile20.chat.ChatMain;
-
 
 public class NewUser extends ActionBarActivity {
 
@@ -101,7 +99,7 @@ public class NewUser extends ActionBarActivity {
                                     User user = new User(username, email);
                                     user_firebase_ref = new Firebase(FIREBASE_URL).child("users");
                                     user_firebase_ref.push().setValue(user);
-                                    Intent userProf = new Intent(NewUser.this, ChatMain.class);
+                                    Intent userProf = new Intent(NewUser.this, Groups.class);
                                     userProf.putExtra("email", user.getEmail());
                                     startActivity(userProf);
                                 }
@@ -122,6 +120,12 @@ public class NewUser extends ActionBarActivity {
         };
         newUser_create_Btn.setOnClickListener(newUser_listener);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(NewUser.this, "User was not created", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     @Override
