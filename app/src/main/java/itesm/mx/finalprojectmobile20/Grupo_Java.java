@@ -10,7 +10,7 @@ public class Grupo_Java {
     String grupo_motto;
     ArrayList<String> grupo_users;
 
-    private Grupo_Java() {
+    public Grupo_Java() {
     }
 
     public Grupo_Java(String grupo_nombre,String grupo_motto, ArrayList<String> grupo_users) {

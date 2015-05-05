@@ -168,6 +168,7 @@ public class AddGroup extends ActionBarActivity{
 
                         }
                     });
+
                     usuarios = new ArrayList<>();
                     usuarios.add(email_user);
                     Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
