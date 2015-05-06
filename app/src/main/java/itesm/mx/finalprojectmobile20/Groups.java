@@ -198,7 +198,6 @@ public class Groups extends ActionBarActivity {
     }
 
     @Override
-
     public void onResume(){
         super.onResume();
         System.out.println("ENTERS ON RESUME");
@@ -235,12 +234,11 @@ public class Groups extends ActionBarActivity {
 
     }
 
-
-
     @Override
     public void onPause() {
         super.onPause();
     }
+    
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == ADD_GROUP_REQUEST) {
