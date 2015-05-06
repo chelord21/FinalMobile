@@ -16,11 +16,11 @@ import itesm.mx.finalprojectmobile20.R;
  */
 public class ChatListAdapter extends FirebaseListAdapter<Chat>  {
 
-    private String chatUser;
+    private String chat_User;
 
     public ChatListAdapter(Query ref, Activity activity, int layout, String mUsername) {
         super(ref, Chat.class, layout, activity);
-        this.chatUser = mUsername;
+        this.chat_User = mUsername;
     }
 
     protected void populateView(View view, Chat chat) {
@@ -29,7 +29,7 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat>  {
         TextView authorText = (TextView) view.findViewById(R.id.author);
         authorText.setText(author);
         // If the message was sent by this user, color it differently
-        if (author != null && author.equals(chatUser)) {
+        if (author != null && author.equals(chat_User)) {
             Log.d("Prueba de tardanza coloreado author", "Se coloreo usuario rojo");
             authorText.setTextColor(Color.RED);
             authorText.setGravity(Gravity.RIGHT);

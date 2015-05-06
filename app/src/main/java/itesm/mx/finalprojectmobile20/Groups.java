@@ -1,7 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -25,25 +24,23 @@ import java.util.List;
 
 public class Groups extends ActionBarActivity {
 
-    ListView listaGrupos;
-    ArrayList<String> nombres;
+    ListView groupsLV;
     String group_name;
     String group_motto;
-    ArrayList<String> lista;
-    List<String> grupos;
+    List<String> groups_groupNameList;
 
-    ArrayList<Grupo_Java> gruposDePersonas;
+    ArrayList<Grupo_Java> groups_groupList;
 
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> groups_adapter;
 
-    String key ;
-    String nombre;
-    String motto;
+    String groups_childKey;
+    String groups_groupName;
+    String groups_groupMotto;
     Grupo_Java grupo_java;
-    ArrayList<String> users;
+    ArrayList<String> groups_groupUsers;
     static final int ADD_GROUP_REQUEST = 1;
 
-    Button load;
+    Button groups_loadGroups_BT;
 
     String user_email;
     String groupName;
@@ -53,8 +50,8 @@ public class Groups extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
         Bundle extras = getIntent().getExtras();
-        users= new ArrayList<String>();
-        gruposDePersonas = new ArrayList<Grupo_Java>();
+        groups_groupUsers= new ArrayList<String>();
+        groups_groupList = new ArrayList<Grupo_Java>();
         if(extras != null){
             user_email = extras.getString("email");
             if(extras.getString("nombre")!=null){
@@ -62,10 +59,10 @@ public class Groups extends ActionBarActivity {
             }
         }
 
-        listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
+        groupsLV = (ListView) findViewById(R.id.groups_grouplist_LV);
 
         Firebase ref = new Firebase("https://hop-in.firebaseio.com/" + "group");
-        final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+        //final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         Query queryRef = ref.orderByChild("grupo_nombre");
 
         queryRef.addChildEventListener(new ChildEventListener() {
@@ -73,27 +70,27 @@ public class Groups extends ActionBarActivity {
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 int counter=0;
                 for (DataSnapshot child : snapshot.getChildren()) {
-                    key =child.getKey();
-                    if(key.equals("grupo_nombre")){
+                    groups_childKey =child.getKey();
+                    if(groups_childKey.equals("grupo_nombre")){
                         counter++;
-                         nombre = child.getValue().toString();
-                    }else if(key.equals("grupo_motto")){
+                         groups_groupName = child.getValue().toString();
+                    }else if(groups_childKey.equals("grupo_motto")){
                         counter++;
-                        motto = child.getValue().toString();
+                        groups_groupMotto = child.getValue().toString();
 
-                        System.out.println("Motto "+motto);
-                    }else if(key.equals("grupo_users")){
+                        System.out.println("Motto "+ groups_groupMotto);
+                    }else if(groups_childKey.equals("grupo_users")){
                         counter++;
-                        users = (ArrayList<String>) child.getValue();
+                        groups_groupUsers = (ArrayList<String>) child.getValue();
 
-                        System.out.println("Users "+users);
+                        System.out.println("Users "+groups_groupUsers);
                     }
                     if(counter == 3){
                         try {
                             Thread.sleep(100);
-                            System.out.println(motto + " " + users +  " " + nombre);
-                            grupo_java = new Grupo_Java(nombre,motto,users);
-                            gruposDePersonas.add(grupo_java);
+                            System.out.println(groups_groupMotto + " " + groups_groupUsers +  " " + groups_groupName);
+                            grupo_java = new Grupo_Java(groups_groupName, groups_groupMotto, groups_groupUsers);
+                            groups_groupList.add(grupo_java);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -123,52 +120,52 @@ public class Groups extends ActionBarActivity {
             }
         });
 
-        grupos = new ArrayList<>();
+        groups_groupNameList = new ArrayList<>();
 
-        load = (Button) findViewById(R.id.groups_loadVar_Btn);
+        groups_loadGroups_BT = (Button) findViewById(R.id.groups_loadVar_Btn);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(load.isPressed()){
-                    for(int i = 0; i< gruposDePersonas.size(); i++){
-                       ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
+                if(groups_loadGroups_BT.isPressed()){
+                    for(int i = 0; i< groups_groupList.size(); i++){
+                       ArrayList<String> array =groups_groupList.get(i).getGrupo_users();
                         for(int j = 0; j < array.size(); j++){
                             if(array.get(j).equals(user_email)){
-                                grupos.add(gruposDePersonas.get(i).getGrupo_nombre());
-                                System.out.println("Entro al if con " + gruposDePersonas.get(i).getGrupo_nombre());
+                                groups_groupNameList.add(groups_groupList.get(i).getGrupo_nombre());
+                                System.out.println("Entro al if con " + groups_groupList.get(i).getGrupo_nombre());
                             }
                         }
 
                     }
 
-                    loadFunction();
-                    load.setVisibility(View.INVISIBLE);
+                    loadGroups();
+                    groups_loadGroups_BT.setVisibility(View.INVISIBLE);
                 }
             }
         };
 
-         listaGrupos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         groupsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               String groups_name_Str = grupos.get(position);
+               String groups_name_Str = groups_groupNameList.get(position);
                Intent intent = new Intent(Groups.this, Group.class);
                intent.putExtra("groupName", groups_name_Str);
                startActivity(intent);
              }
          });
 
-        load.setOnClickListener(listener);
+        groups_loadGroups_BT.setOnClickListener(listener);
 
      }
 
-    public void loadFunction(){
-        adapter =new ArrayAdapter<String>(
+    public void loadGroups(){
+        groups_adapter =new ArrayAdapter<String>(
                 this,
                 R.layout.activity_row,
                 R.id.rowTV,
-                grupos
+                groups_groupNameList
         );
-        listaGrupos.setAdapter(adapter);
+        groupsLV.setAdapter(groups_adapter);
     }
 
 
@@ -204,50 +201,48 @@ public class Groups extends ActionBarActivity {
     }
 
     @Override
-
     public void onResume(){
         super.onResume();
         System.out.println("ENTERS ON RESUME");
 
-        load.setVisibility(View.VISIBLE);
-        load.setOnClickListener(new View.OnClickListener() {
+        groups_loadGroups_BT.setVisibility(View.VISIBLE);
+        groups_loadGroups_BT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(load.isPressed()){
-                    for(int i = 0; i< gruposDePersonas.size(); i++){
-                        ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
-                        System.out.println("Checo " + gruposDePersonas.get(i).getGrupo_nombre());
+                if(groups_loadGroups_BT.isPressed()){
+                    for(int i = 0; i< groups_groupList.size(); i++){
+                        ArrayList<String> array =groups_groupList.get(i).getGrupo_users();
+                        System.out.println("Checo " + groups_groupList.get(i).getGrupo_nombre());
                         for(int j = 0; j < array.size(); j++){
                             if(array.get(j).equals(user_email)){
-                                grupos.add(gruposDePersonas.get(i).getGrupo_nombre());
-                                System.out.println("Entro al if con " + gruposDePersonas.get(i).getGrupo_nombre());
+                                groups_groupNameList.add(groups_groupList.get(i).getGrupo_nombre());
+                                System.out.println("Entro al if con " + groups_groupList.get(i).getGrupo_nombre());
                             }
                         }
 
                     }
-                    loadFunction();
-                    load.setVisibility(View.INVISIBLE);
+                    loadGroups();
+                    groups_loadGroups_BT.setVisibility(View.INVISIBLE);
                 }
 
             }
         });
 
         try{
-            adapter.clear();
-            adapter.addAll(grupos);
-            adapter.notifyDataSetChanged();
+            groups_adapter.clear();
+            groups_adapter.addAll(groups_groupNameList);
+            groups_adapter.notifyDataSetChanged();
         }catch(NullPointerException e){
 
         }
 
     }
 
-
-
     @Override
     public void onPause() {
         super.onPause();
     }
+    
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if (requestCode == ADD_GROUP_REQUEST) {

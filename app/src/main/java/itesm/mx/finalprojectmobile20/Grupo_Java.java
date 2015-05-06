@@ -43,7 +43,5 @@ public class Grupo_Java {
     public void setGrupo_motto(String grupo_motto) {
         this.grupo_motto = grupo_motto;
     }
-
-
 }
 
