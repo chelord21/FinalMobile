@@ -177,8 +177,7 @@ public class AddGroup extends ActionBarActivity{
                     usuarios.add(email_user);
                     Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
                     ag_firebase_ref.push().setValue(grupo_java);
-                    Intent intent = new Intent(AddGroup.this, Groups.class);
-                    startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();

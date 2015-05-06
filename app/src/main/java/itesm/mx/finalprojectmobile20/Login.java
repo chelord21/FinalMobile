@@ -150,7 +150,7 @@ public class Login extends ActionBarActivity {
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
-                                Intent userProf = new Intent(Login.this, UserProfile.class);
+                                Intent userProf = new Intent(Login.this, Groups.class);
                                 userProf.putExtra("email", email);
                                 startActivity(userProf);
                             }
