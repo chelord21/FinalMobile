@@ -1,8 +1,11 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -99,6 +102,22 @@ public class Login extends ActionBarActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         final String mail = input.getText().toString();
 
+                        Firebase.ResultHandler handler = new Firebase.ResultHandler() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Email has been sent",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Oops, there was an error. Please try again",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        fireBaseRef.resetPassword(mail, handler);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -126,21 +145,25 @@ public class Login extends ActionBarActivity {
                     email = login_username_ET.getText().toString();
                     String password = login_password_ET.getText().toString();
 
-                    fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
-                        @Override
-                        public void onAuthenticated(AuthData authData) {
-                            System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                            Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
-                            Intent userProf = new Intent(Login.this, Groups.class);
-                            userProf.putExtra("email", email);
-                            startActivity(userProf);
-                        }
-                        @Override
-                        public void onAuthenticationError(FirebaseError firebaseError) {
-                            Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    handled = true;
+                    if(isNetworkConnected()){
+                        fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
+                                Intent userProf = new Intent(Login.this, Groups.class);
+                                userProf.putExtra("email", email);
+                                startActivity(userProf);
+                            }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        handled = true;
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Cannot complete actions because you are not connected to internet", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 return handled;
             }
@@ -162,5 +185,15 @@ public class Login extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }

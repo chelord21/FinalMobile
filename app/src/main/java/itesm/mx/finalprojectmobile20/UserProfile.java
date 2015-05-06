@@ -2,11 +2,14 @@ package itesm.mx.finalprojectmobile20;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -90,7 +93,12 @@ public class UserProfile extends ActionBarActivity {
             user_email_S = extras.getString("email");
         }
 
-        setUser();
+        if(isNetworkConnected()){
+            setUser();
+        }else{
+            Toast.makeText(UserProfile.this, "Couldn't retrive user information because you are not connected to internet.", Toast.LENGTH_SHORT).show();
+        }
+
 
         userProfile_email_TV.setText(user_email_S);
 
@@ -147,9 +155,13 @@ public class UserProfile extends ActionBarActivity {
         userProdile_save_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveImage(scaled);
-                changesFlag = false;
-                Toast.makeText(UserProfile.this, "Image Saved", Toast.LENGTH_SHORT).show();
+                if(isNetworkConnected()) {
+                    saveImage(scaled);
+                    changesFlag = false;
+                    Toast.makeText(UserProfile.this, "Image Saved", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(UserProfile.this, "Cannot complete action. You are not connected to internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -184,7 +196,7 @@ public class UserProfile extends ActionBarActivity {
                     Toast.makeText(UserProfile.this, "Error, no image to retrive", Toast.LENGTH_SHORT).show();
                 }
 
-                System.out.println("user is " + userProfile_username_S);
+                System.out.println("User: " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);
             }
 
@@ -291,5 +303,16 @@ public class UserProfile extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }
