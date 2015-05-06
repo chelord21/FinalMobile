@@ -123,6 +123,9 @@ public class Group extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(group_loadEvents_BT.isPressed()){
+                    for(int i = 0; i< group_eventList.size(); i++){
+                        group_eventNameList.add(group_eventList.get(i).getEventName());
+                    }
                     loadEvents();
                     group_loadEvents_BT.setVisibility(View.INVISIBLE);
                 }
@@ -187,6 +190,9 @@ public class Group extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(group_loadEvents_BT.isPressed()){
+                    for(int i = 0; i< group_eventList.size(); i++){
+                        group_eventNameList.add(group_eventList.get(i).getEventName());
+                    }
                     loadEvents();
                     group_loadEvents_BT.setVisibility(View.INVISIBLE);
                 }
