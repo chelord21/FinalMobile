@@ -42,6 +42,7 @@ public class Groups extends ActionBarActivity {
     ArrayList<String> users;
 
 
+    Button load;
 
     String user_email;
 
@@ -58,7 +59,6 @@ public class Groups extends ActionBarActivity {
 
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
 
-        nombres = new ArrayList<String>();
         Firebase ref = new Firebase("https://hop-in.firebaseio.com/" + "group");
         final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         Query queryRef = ref.orderByChild("grupo_nombre");
@@ -120,11 +120,11 @@ public class Groups extends ActionBarActivity {
 
         grupos = new ArrayList<>();
 
-        final Button chat = (Button) findViewById(R.id.groups_loadVar_Btn);
+        load = (Button) findViewById(R.id.groups_loadVar_Btn);
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(chat.isPressed()){
+                if(load.isPressed()){
                     for(int i = 0; i< gruposDePersonas.size(); i++){
                        ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
                         for(int j = 0; j < array.size(); j++){
@@ -137,12 +137,10 @@ public class Groups extends ActionBarActivity {
                     }
 
                     loadFunction();
-                    chat.setVisibility(View.INVISIBLE);
+                    load.setVisibility(View.INVISIBLE);
                 }
             }
         };
-
-         listaGrupos.setAdapter(adapter);
 
          listaGrupos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
@@ -154,12 +152,12 @@ public class Groups extends ActionBarActivity {
              }
          });
 
-        chat.setOnClickListener(listener);
+        load.setOnClickListener(listener);
 
      }
 
     public void loadFunction(){
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(
+        adapter =new ArrayAdapter<String>(
                 this,
                 R.layout.activity_row,
                 R.id.rowTV,
@@ -198,5 +196,49 @@ public class Groups extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        System.out.println("ENTERS ON RESUME");
+        load.setVisibility(View.VISIBLE);
+        load.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(load.isPressed()){
+                    for(int i = 0; i< gruposDePersonas.size(); i++){
+                        ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
+                        System.out.println("Checo " + gruposDePersonas.get(i).getGrupo_nombre());
+                        for(int j = 0; j < array.size(); j++){
+                            if(array.get(j).equals(user_email)){
+                                grupos.add(gruposDePersonas.get(i).getGrupo_nombre());
+                                System.out.println("Entro al if con " + gruposDePersonas.get(i).getGrupo_nombre());
+                            }
+                        }
+
+                    }
+                    loadFunction();
+                    load.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
+
+        try{
+            adapter.clear();
+            adapter.addAll(grupos);
+            adapter.notifyDataSetChanged();
+        }catch(NullPointerException e){
+
+        }
+
+    }
+
+
+
+    @Override
+    public void onPause(){
+        super.onPause();
     }
 }
