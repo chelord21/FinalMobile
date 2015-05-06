@@ -4,9 +4,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 
 public class AddEvent extends ActionBarActivity {
+
+    //Edit Texts
+    EditText ae_eventName_ET;
+    EditText ae_eventLocation_ET;
+    EditText ae_date_ET;
+    EditText ae_time_ET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
