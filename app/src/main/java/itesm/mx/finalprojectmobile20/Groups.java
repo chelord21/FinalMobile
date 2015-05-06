@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -40,7 +41,7 @@ public class Groups extends ActionBarActivity {
     String motto;
     Grupo_Java grupo_java;
     ArrayList<String> users;
-
+    static final int ADD_GROUP_REQUEST = 1;
 
     Button load;
 
@@ -185,7 +186,7 @@ public class Groups extends ActionBarActivity {
         if (id == R.id.menuGroups_addGroup) {
             Intent intent = new Intent(Groups.this, AddGroup.class);
             intent.putExtra("email", user_email);
-            startActivity(intent);
+            startActivityForResult(intent, ADD_GROUP_REQUEST);
             return true;
         }
         if (id == R.id.menuGroups_userProfile) {
@@ -199,6 +200,7 @@ public class Groups extends ActionBarActivity {
     }
 
     @Override
+
     public void onResume(){
         super.onResume();
         System.out.println("ENTERS ON RESUME");
@@ -238,7 +240,17 @@ public class Groups extends ActionBarActivity {
 
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == ADD_GROUP_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getApplicationContext(), "Group created", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 }

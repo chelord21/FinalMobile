@@ -1,13 +1,25 @@
 package itesm.mx.finalprojectmobile20;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.firebase.client.Firebase;
+
+import java.io.IOException;
 
 
 public class AddEvent extends ActionBarActivity {
@@ -20,6 +32,12 @@ public class AddEvent extends ActionBarActivity {
 
     //Buttons
     Button ae_saveEvent_BT;
+
+    //Strings
+    String ae_eventName;
+    String ae_eventLocation;
+    String ae_eventDate;
+    String ae_eventTime;
 
     //Firebase
     private Firebase ae_firebase_ref;
@@ -37,6 +55,37 @@ public class AddEvent extends ActionBarActivity {
         ae_time_ET = (EditText)findViewById(R.id.ae_time_ET);
 
         ae_firebase_ref = new Firebase(FIREBASE_URL).child("events");
+
+        ae_saveEvent_BT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                scaled.compress(Bitmap.CompressFormat.PNG, 0, stream);
+                arrayFoto = stream.toByteArray();
+                */
+                if(isNetworkConnected()) {
+                    if (!ae_date_ET.getText().toString().isEmpty() || !ae_eventLocation_ET.getText().toString().isEmpty() || !ae_eventName_ET.getText().toString().isEmpty() || !ae_time_ET.getText().toString().isEmpty()) {
+                        ae_eventName = ae_eventName_ET.getText().toString();
+                        ae_eventLocation = ae_eventLocation_ET.getText().toString();
+                        ae_eventTime = ae_time_ET.getText().toString();
+                        ae_eventDate = ae_date_ET.getText().toString();
+
+                        Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate);
+                        ae_firebase_ref.push().setValue(newEvent);
+                        Intent intent = new Intent(AddEvent.this, Group.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(AddEvent.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(AddEvent.this, "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
     }
 
 
@@ -60,5 +109,30 @@ public class AddEvent extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(AddEvent.this, "Event was not created", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
+    private class MyNullKeySerializer extends JsonSerializer<Object> {
+        @Override
+        public void serialize(Object nullKey, JsonGenerator jsonGenerator, SerializerProvider unused)
+                throws IOException, JsonProcessingException
+        {
+            jsonGenerator.writeFieldName("");
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }

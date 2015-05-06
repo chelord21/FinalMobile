@@ -49,5 +49,6 @@
     <string name="mg_members_TV">Members</string>
     <string name="title_activity_add_event">AddEvent</string>
     <string name="saveEvent_BT">Save Event</string>
+    <string name="title_activity_group">Group</string>
 
 </resources>
