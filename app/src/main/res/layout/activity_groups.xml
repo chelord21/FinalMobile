@@ -18,8 +18,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temp chat"
-        android:id="@+id/groups_chat_Btn"
+        android:text="Load Data"
+        android:id="@+id/groups_loadVar_Btn"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="34dp" />

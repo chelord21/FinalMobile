@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +18,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import itesm.mx.finalprojectmobile20.chat.ChatMain;
 
 
 public class Groups extends ActionBarActivity {
@@ -36,7 +30,18 @@ public class Groups extends ActionBarActivity {
     ArrayList<String> lista;
     List<String> grupos;
 
+    ArrayList<Grupo_Java> gruposDePersonas;
+
     ArrayAdapter<String> adapter;
+
+    String key ;
+    String nombre;
+    String motto;
+    Grupo_Java grupo_java;
+    ArrayList<String> users;
+
+
+
     String user_email;
 
     @Override
@@ -44,7 +49,8 @@ public class Groups extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
         Bundle extras = getIntent().getExtras();
-
+        users= new ArrayList<String>();
+        gruposDePersonas = new ArrayList<Grupo_Java>();
         if(extras != null){
             user_email = extras.getString("email");
         }
@@ -52,18 +58,6 @@ public class Groups extends ActionBarActivity {
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
 
         nombres = new ArrayList<String>();
-        final Button chat = (Button) findViewById(R.id.groups_chat_Btn);
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(chat.isPressed()){
-                    Intent intent = new Intent(Groups.this, ChatMain.class);
-                    intent.putExtra("email", user_email);
-                    startActivity(intent);
-                }
-            }
-        };
-
         Firebase ref = new Firebase("https://hop-in.firebaseio.com/" + "group");
         final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         Query queryRef = ref.orderByChild("grupo_nombre");
@@ -71,16 +65,35 @@ public class Groups extends ActionBarActivity {
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
-                String grupo_name = value.get("grupo_nombre").toString();
-                String grupo_motto = value.get("grupo_motto").toString();
-                lista =(ArrayList<String>) value.get("grupo_users");
-                prefs.edit().putString("grupo_name", grupo_name).apply();
-                prefs.edit().putString("grupo_motto",grupo_motto).apply();
-                Set<String> set = new HashSet<>();
-                set.addAll(lista);
-                prefs.edit().putStringSet("grupo_users",set).apply();
-                System.out.println("id is "+ snapshot.getKey() + " motto is " + value.get("grupo_motto") + "group name is "+ grupo_name + " users " + lista);
+                int counter=0;
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    key =child.getKey();
+                    if(key.equals("grupo_nombre")){
+                        counter++;
+                         nombre = child.getValue().toString();
+                    }else if(key.equals("grupo_motto")){
+                        counter++;
+                        motto = child.getValue().toString();
+
+                        System.out.println("Motto "+motto);
+                    }else if(key.equals("grupo_users")){
+                        counter++;
+                        users = (ArrayList<String>) child.getValue();
+
+                        System.out.println("Users "+users);
+                    }
+                    if(counter == 3){
+                        try {
+                            Thread.sleep(100);
+                            System.out.println(motto + " " + users +  " " + nombre);
+                            grupo_java = new Grupo_Java(nombre,motto,users);
+                            gruposDePersonas.add(grupo_java);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
             }
 
             @Override
@@ -104,37 +117,37 @@ public class Groups extends ActionBarActivity {
             }
         });
 
-        Map<String,?> keys = prefs.getAll();
 
-        for(Map.Entry<String,?> entry : keys.entrySet()){
-            Log.d("map values", entry.getKey() + ": " +
-                    entry.getValue().toString());
-        }
-        grupos = new ArrayList<>();
 
-        Set<String> set = (Set<String>) keys.get("grupo_users");
-        group_name = keys.get("grupo_name").toString();
-        group_motto = keys.get("grupo_motto").toString();
-        for (String s : set) {
-            if(s.equals(user_email)){
-                grupos.add(group_name);
-                System.out.println(s);
+        final Button chat = (Button) findViewById(R.id.groups_loadVar_Btn);
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(chat.isPressed()){
+                    for(int i = 0; i< gruposDePersonas.size(); i++){
+                        gruposDePersonas.get(i).getGrupo_nombre();
+                    }
+
+                }
             }
+        };
 
-        }
 
-        System.out.println(grupos);
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(
-               this,
-               R.layout.activity_row,
-               R.id.rowTV,
-               grupos
-        );
-        listaGrupos.setAdapter(adapter);
+
 
         chat.setOnClickListener(listener);
 
      }
+
+    public void loadFunction(){
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(
+                this,
+                R.layout.activity_row,
+                R.id.rowTV,
+                grupos
+        );
+        listaGrupos.setAdapter(adapter);
+    }
 
 
         @Override

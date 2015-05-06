@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -71,7 +70,7 @@ public class Login extends ActionBarActivity {
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
-                                Intent userProf = new Intent(Login.this, Groups.class);
+                                Intent userProf = new Intent(Login.this, UserProfile.class);
                                 userProf.putExtra("email", email);
                                 startActivity(userProf);
                             }
@@ -151,7 +150,7 @@ public class Login extends ActionBarActivity {
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
-                                Intent userProf = new Intent(Login.this, Groups.class);
+                                Intent userProf = new Intent(Login.this, UserProfile.class);
                                 userProf.putExtra("email", email);
                                 startActivity(userProf);
                             }
