@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -143,6 +144,16 @@ public class Groups extends ActionBarActivity {
         };
 
          listaGrupos.setAdapter(adapter);
+
+         listaGrupos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               String groups_name_Str = grupos.get(position);
+               Intent intent = new Intent(Groups.this, Group.class);
+               intent.putExtra("groupName", groups_name_Str);
+               startActivity(intent);
+             }
+         });
 
         chat.setOnClickListener(listener);
 
