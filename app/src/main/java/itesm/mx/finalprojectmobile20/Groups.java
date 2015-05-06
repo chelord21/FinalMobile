@@ -117,7 +117,7 @@ public class Groups extends ActionBarActivity {
             }
         });
 
-
+        grupos = new ArrayList<>();
 
         final Button chat = (Button) findViewById(R.id.groups_loadVar_Btn);
         View.OnClickListener listener = new View.OnClickListener() {
@@ -125,9 +125,16 @@ public class Groups extends ActionBarActivity {
             public void onClick(View v) {
                 if(chat.isPressed()){
                     for(int i = 0; i< gruposDePersonas.size(); i++){
-                        gruposDePersonas.get(i).getGrupo_nombre();
+                       ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
+                        for(int j = 0; j < array.size(); j++){
+                            if(array.get(j) == user_email){
+                                grupos.add(gruposDePersonas.get(i).getGrupo_nombre());
+                            }
+                        }
+
                     }
 
+                    loadFunction();
                 }
             }
         };
