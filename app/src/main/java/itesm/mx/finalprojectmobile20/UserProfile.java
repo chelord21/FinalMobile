@@ -119,7 +119,6 @@ public class UserProfile extends ActionBarActivity {
                                 File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
 
                                 //if (f.exists() && f.canWrite()) f.delete();
-
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
@@ -196,7 +195,7 @@ public class UserProfile extends ActionBarActivity {
                     Toast.makeText(UserProfile.this, "Error, no image to retrive", Toast.LENGTH_SHORT).show();
                 }
 
-                System.out.println("User: " + userProfile_username_S);
+                System.out.println("User in datasnapshot: " + userProfile_username_S);
                 userProfile_username_TV.setText(userProfile_username_S);
             }
 
