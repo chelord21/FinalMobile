@@ -29,7 +29,7 @@ public class Login extends ActionBarActivity {
     EditText login_password_ET;
 
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
-    String email;
+    String login_userEmail;
 
     //Image views
     ImageView login_logo_IV;
@@ -62,16 +62,16 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.login_Log_Btn:
-                        email = login_username_ET.getText().toString();
-                        String password = login_password_ET.getText().toString();
+                        login_userEmail = login_username_ET.getText().toString();
+                        String login_userPassword = login_password_ET.getText().toString();
 
-                        fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                        fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                                Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
                                 Intent userProf = new Intent(Login.this, Groups.class);
-                                userProf.putExtra("email", email);
+                                userProf.putExtra("email", login_userEmail);
                                 startActivity(userProf);
                             }
                             @Override
@@ -141,17 +141,17 @@ public class Login extends ActionBarActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-                    email = login_username_ET.getText().toString();
-                    String password = login_password_ET.getText().toString();
+                    login_userEmail = login_username_ET.getText().toString();
+                    String login_userPassword = login_password_ET.getText().toString();
 
                     if(isNetworkConnected()){
-                        fireBaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                        fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
                                 System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
-                                Toast.makeText(getApplicationContext(), "Welcome " + email, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
                                 Intent userProf = new Intent(Login.this, Groups.class);
-                                userProf.putExtra("email", email);
+                                userProf.putExtra("email", login_userEmail);
                                 startActivity(userProf);
                             }
                             @Override

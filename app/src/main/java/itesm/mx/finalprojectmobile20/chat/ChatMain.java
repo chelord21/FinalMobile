@@ -27,8 +27,8 @@ public class ChatMain extends ActionBarActivity {
 
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
-    private String chat_username_S;
-    private String user_email_S;
+    private String chat_username;
+    private String user_email;
     private Firebase chat_firebase_ref;
     private ValueEventListener chat_event_VEL;
     private ChatListAdapter chat_listAdapter_LA;
@@ -42,10 +42,10 @@ public class ChatMain extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            user_email_S = extras.getString("email");
+            user_email = extras.getString("email");
         }
 
-        setUsername();
+        getUsername();
         chat_firebase_ref = new Firebase(FIREBASE_URL).child("chat");
         chat_input_ET = (EditText) findViewById(R.id.messageInput);
 
@@ -69,19 +69,19 @@ public class ChatMain extends ActionBarActivity {
         });
     }
 
-    private void setUsername() {
+    private void getUsername() {
         //User name set
 
         Firebase ref = new Firebase(FIREBASE_URL + "users");
         final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
-        Query queryRef = ref.orderByChild("email").equalTo(user_email_S);
+        Query queryRef = ref.orderByChild("email").equalTo(user_email);
 
         queryRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
-                chat_username_S = value.get("user").toString();
-                prefs.edit().putString("username", chat_username_S).commit();
+                chat_username = value.get("user").toString();
+                prefs.edit().putString("username", chat_username).commit();
                 System.out.println("user is " + value.get("user"));
             }
 
@@ -113,7 +113,7 @@ public class ChatMain extends ActionBarActivity {
         // Setup our view and list adapter. Ensure it scrolls to the bottom as data changes
         final ListView listView =(ListView) findViewById(android.R.id.list);
         // Tell our list adapter that we only want 50 messages at a time
-        chat_listAdapter_LA = new ChatListAdapter(chat_firebase_ref.limit(50), this, R.layout.chat_message, chat_username_S);
+        chat_listAdapter_LA = new ChatListAdapter(chat_firebase_ref.limit(50), this, R.layout.chat_message, chat_username);
         listView.setAdapter(chat_listAdapter_LA);
         chat_listAdapter_LA.registerDataSetObserver(new DataSetObserver() {
             @Override
@@ -154,7 +154,7 @@ public class ChatMain extends ActionBarActivity {
         String input = inputText.getText().toString();
         if (!input.equals("")) {
             // Create our 'model', a Chat object
-            Chat chat = new Chat(input, chat_username_S);
+            Chat chat = new Chat(input, chat_username);
             // Create a new, auto-generated child of that chat location, and save our chat data there
             chat_firebase_ref.push().setValue(chat);
             inputText.setText("");

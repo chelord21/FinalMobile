@@ -10,14 +10,14 @@ import android.widget.ListView;
 
 public class Group extends ActionBarActivity {
 
-    ListView listaEventos;
+    ListView group_EventsLV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        listaEventos = (ListView)findViewById(R.id.group_eventList_LV);
+        group_EventsLV = (ListView)findViewById(R.id.group_eventList_LV);
     }
 
 
