@@ -127,20 +127,21 @@ public class Groups extends ActionBarActivity {
                     for(int i = 0; i< gruposDePersonas.size(); i++){
                        ArrayList<String> array =gruposDePersonas.get(i).getGrupo_users();
                         for(int j = 0; j < array.size(); j++){
-                            if(array.get(j) == user_email){
+                            if(array.get(j).equals(user_email)){
                                 grupos.add(gruposDePersonas.get(i).getGrupo_nombre());
+                                System.out.println("Entro al if con " + gruposDePersonas.get(i).getGrupo_nombre());
                             }
                         }
 
                     }
 
                     loadFunction();
+                    chat.setVisibility(View.INVISIBLE);
                 }
             }
         };
 
-
-
+         listaGrupos.setAdapter(adapter);
 
         chat.setOnClickListener(listener);
 
