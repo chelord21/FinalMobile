@@ -5,31 +5,18 @@ package itesm.mx.finalprojectmobile20;
  */
 public class Event {
     private String eventName;
-    private String groupName;
     private String eventLocation;
+    private String eventTime;
+    private String eventDate;
 
-    private Event() {
+    public Event() {
 
     }
 
-    private Event(String eventName, String groupName) {
+    public Event(String eventName, String eventLocation, String eventTime, String eventDate) {
         this.eventName = eventName;
-        this.groupName = groupName;
-    }
-
-    public String getEventLocation() {
-        return eventLocation;
-    }
-
-    public void setEventLocation(String eventLocation) {
         this.eventLocation = eventLocation;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public String getGroupName() {
-        return groupName;
+        this.eventTime = eventTime;
+        this.eventDate = eventDate;
     }
 }
