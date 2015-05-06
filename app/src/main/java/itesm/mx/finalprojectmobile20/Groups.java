@@ -59,7 +59,7 @@ public class Groups extends ActionBarActivity {
         groupsLV = (ListView) findViewById(R.id.groups_grouplist_LV);
 
         Firebase ref = new Firebase("https://hop-in.firebaseio.com/" + "group");
-        final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+        //final SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         Query queryRef = ref.orderByChild("grupo_nombre");
 
         queryRef.addChildEventListener(new ChildEventListener() {
