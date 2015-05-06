@@ -4,14 +4,39 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.firebase.client.Firebase;
 
 
 public class AddEvent extends ActionBarActivity {
+
+    //Edit Texts
+    EditText ae_eventName_ET;
+    EditText ae_eventLocation_ET;
+    EditText ae_date_ET;
+    EditText ae_time_ET;
+
+    //Buttons
+    Button ae_saveEvent_BT;
+
+    //Firebase
+    private Firebase ae_firebase_ref;
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+
+        ae_saveEvent_BT = (Button)findViewById(R.id.ae_saveEvent_BT);
+        ae_eventName_ET = (EditText)findViewById(R.id.ae_eventName_ET);
+        ae_eventLocation_ET = (EditText)findViewById(R.id.ae_eventLocation_ET);
+        ae_date_ET = (EditText)findViewById(R.id.ae_date_ET);
+        ae_time_ET = (EditText)findViewById(R.id.ae_time_ET);
+
+        ae_firebase_ref = new Firebase(FIREBASE_URL).child("events");
     }
 
 
