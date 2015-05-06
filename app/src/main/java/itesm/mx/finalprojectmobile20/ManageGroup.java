@@ -17,27 +17,27 @@ import android.widget.Toast;
 
 public class ManageGroup extends ActionBarActivity {
 
-    Button editPhoto;
-    Button saveChanges;
-    Button addFriend;
-    TextView groupName_TV;
-    TextView groupMotto_TV;
-    ListView members;
+    Button manageGroup_editPhoto_BtnUI;
+    Button manageGroup_saveChanges_BtnUI;
+    Button manageGroup_addFriend_BtnUI;
+    TextView manageGroup_groupName_TV;
+    TextView manageGroup_groupMotto_TV;
+    ListView manageGroup_members_LV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_group);
 
-        editPhoto = (Button)findViewById(R.id.mg_changePic_BT);
-        saveChanges = (Button)findViewById(R.id.mg_saveChanges_BT);
-        addFriend = (Button)findViewById(R.id.mg_addFriend_BT);
-        groupName_TV = (TextView)findViewById(R.id.mg_groupName_ET);
-        groupMotto_TV = (TextView)findViewById(R.id.mg_groupMotto_ET);
-        members = (ListView)findViewById(R.id.mg_members_LV);
+        manageGroup_editPhoto_BtnUI = (Button)findViewById(R.id.mg_changePic_BT);
+        manageGroup_saveChanges_BtnUI = (Button)findViewById(R.id.mg_saveChanges_BT);
+        manageGroup_addFriend_BtnUI = (Button)findViewById(R.id.mg_addFriend_BT);
+        manageGroup_groupName_TV = (TextView)findViewById(R.id.mg_groupName_ET);
+        manageGroup_groupMotto_TV = (TextView)findViewById(R.id.mg_groupMotto_ET);
+        manageGroup_members_LV = (ListView)findViewById(R.id.mg_members_LV);
 
 
-        addFriend.setOnClickListener(new View.OnClickListener() {
+        manageGroup_addFriend_BtnUI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isNetworkConnected()) {
@@ -68,8 +68,7 @@ public class ManageGroup extends ActionBarActivity {
                     });
                     AlertDialog alertDialog = alert.create();
                     alertDialog.show();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
                 }
             }
