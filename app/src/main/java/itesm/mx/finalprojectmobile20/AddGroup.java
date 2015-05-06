@@ -169,19 +169,23 @@ public class AddGroup extends ActionBarActivity{
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
 
-                            }
-                        });
-                        usuarios = new ArrayList<>();
-                        usuarios.add(email_user);
-                        Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
-                        ag_firebase_ref.push().setValue(grupo_java);
-                        Intent intent = new Intent(AddGroup.this, Groups.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
-                    }
+
+                        }
+                    });
+
+                    usuarios = new ArrayList<>();
+                    usuarios.add(email_user);
+                    Grupo_Java grupo_java = new Grupo_Java(nombre, motto, usuarios);
+                    ag_firebase_ref.push().setValue(grupo_java);
+                    Intent intent = new Intent(AddGroup.this, Groups.class);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                   }
                 }else{
                     Toast.makeText(AddGroup.this, "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
