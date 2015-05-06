@@ -46,6 +46,7 @@ public class Groups extends ActionBarActivity {
     Button load;
 
     String user_email;
+    String groupName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,9 @@ public class Groups extends ActionBarActivity {
         gruposDePersonas = new ArrayList<Grupo_Java>();
         if(extras != null){
             user_email = extras.getString("email");
+            if(extras.getString("nombre")!=null){
+                groupName =extras.getString("nombre");
+            }
         }
 
         listaGrupos = (ListView) findViewById(R.id.groups_grouplist_LV);
@@ -204,6 +208,7 @@ public class Groups extends ActionBarActivity {
     public void onResume(){
         super.onResume();
         System.out.println("ENTERS ON RESUME");
+
         load.setVisibility(View.VISIBLE);
         load.setOnClickListener(new View.OnClickListener() {
             @Override
