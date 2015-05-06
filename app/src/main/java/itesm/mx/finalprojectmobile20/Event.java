@@ -4,10 +4,10 @@ package itesm.mx.finalprojectmobile20;
  * Created by Marco, collaborated by Chelord on 5/1/15.
  */
 public class Event {
-    private String eventName;
-    private String eventLocation;
-    private String eventTime;
-    private String eventDate;
+    String eventName;
+    String eventLocation;
+    String eventTime;
+    String eventDate;
 
     public Event() {
 
@@ -17,6 +17,38 @@ public class Event {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventTime = eventTime;
+        this.eventDate = eventDate;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public String getEventLocation() {
+        return eventLocation;
+    }
+
+    public void setEventLocation(String eventLocation) {
+        this.eventLocation = eventLocation;
+    }
+
+    public String getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(String eventTime) {
+        this.eventTime = eventTime;
+    }
+
+    public String getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
     }
 }
