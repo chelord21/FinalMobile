@@ -37,6 +37,8 @@ public class Group extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuGroup_addEvent) {
+            Intent intent = new Intent(Group.this, AddEvent.class);
+            startActivity(intent);
             return true;
         }
         else if (id == R.id.menuGroup_modifyGroup) {
