@@ -254,6 +254,12 @@ public class AddGroup extends ActionBarActivity{
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(AddGroup.this, "Group was not created", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
     private class MyNullKeySerializer extends JsonSerializer<Object> {
         @Override
         public void serialize(Object nullKey, JsonGenerator jsonGenerator, SerializerProvider unused)
