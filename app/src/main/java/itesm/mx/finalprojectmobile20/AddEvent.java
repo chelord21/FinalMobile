@@ -49,6 +49,8 @@ public class AddEvent extends ActionBarActivity {
         setContentView(R.layout.activity_add_event);
         Firebase.setAndroidContext(this);
 
+        setTitle("New Event");
+
         ae_saveEvent_BT = (Button)findViewById(R.id.ae_saveEvent_BT);
         ae_eventName_ET = (EditText)findViewById(R.id.ae_eventName_ET);
         ae_eventLocation_ET = (EditText)findViewById(R.id.ae_eventLocation_ET);

@@ -43,6 +43,7 @@ public class EventDetails extends ActionBarActivity {
             chat_eventTime = extras.getString("eventTime");
         }
 
+        setTitle(chat_eventName + " Details");
         ed_eventName.setText(chat_eventName);
         ed_eventDate.setText(chat_eventDate);
         ed_eventTime.setText(chat_eventTime);
