@@ -55,6 +55,7 @@ public class ChatMain extends ActionBarActivity {
         if (extras != null) {
             user_email = extras.getString("userEmail");
             chat_eventKey = extras.getString("key");
+            System.out.println("Group Key from chat main: " + chat_eventKey);
             chat_eventName = extras.getString("eventName");
             chat_eventLocation = extras.getString("eventLocation");
             chat_eventDate = extras.getString("eventDate");

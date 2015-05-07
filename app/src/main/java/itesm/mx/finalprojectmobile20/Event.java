@@ -9,6 +9,7 @@ public class Event {
     String eventTime;
     String eventDate;
     String groupName;
+    String groupKey;
 
     public Event() {
 
@@ -21,12 +22,13 @@ public class Event {
         this.eventDate = eventDate;
     }
 
-    public Event(String eventName, String eventLocation, String eventTime, String eventDate, String groupName) {
+    public Event(String eventName, String eventLocation, String eventTime, String eventDate, String groupName, String groupKey) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventTime = eventTime;
         this.eventDate = eventDate;
         this.groupName = groupName;
+        this.groupKey = groupKey;
     }
 
     public String getEventName() {
@@ -67,5 +69,13 @@ public class Event {
 
     public void setGroupName(String eventDate) {
         this.groupName = groupName;
+    }
+
+    public String getGroupKey() {
+        return groupKey;
+    }
+
+    public void setGroupKey(String groupKey) {
+        this.groupKey = groupKey;
     }
 }

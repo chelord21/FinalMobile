@@ -108,8 +108,8 @@ public class Group extends ActionBarActivity {
                     if(counter == 5){
                         try {
                             Thread.sleep(100);
-                            System.out.println(group_eventName + " " + group_eventLocation +  " " + group_eventTime + " " + group_eventDate);
-                            newEvent = new Event(group_eventName, group_eventLocation, group_eventTime, group_eventDate, group_OwnerGroup);
+                            System.out.println(group_eventName + " " + group_eventLocation +  " " + group_eventTime + " " + group_eventDate + " EVENT KEY: "+ group_eventKeyID);
+                            newEvent = new Event(group_eventName, group_eventLocation, group_eventTime, group_eventDate, group_OwnerGroup, group_eventKeyID);
                             group_eventList.add(newEvent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -164,12 +164,19 @@ public class Group extends ActionBarActivity {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Intent intent = new Intent(Group.this, ChatMain.class);
-               intent.putExtra("key", group_eventKeyID);
+               for (int i = 0; i < group_eventList.size(); i++) {
+                   for (int j = 0; j < group_eventNameList.size(); j++) {
+                       if (group_eventList.get(i).getEventName().equals(group_eventNameList.get(j))) {
+                           System.out.println("Group Key from group click: " + group_eventList.get(i).getGroupKey());
+                           intent.putExtra("key", group_eventList.get(i).getGroupKey());
+                           intent.putExtra("eventName", group_eventList.get(i).getEventName());
+                           intent.putExtra("eventLocation", group_eventList.get(i).getEventLocation());
+                           intent.putExtra("eventTime", group_eventList.get(i).getEventTime());
+                           intent.putExtra("eventDate", group_eventList.get(i).getEventDate());
+                       }
+                   }
+               }
                intent.putExtra("userEmail", group_userEmail);
-               intent.putExtra("eventName", group_eventName);
-               intent.putExtra("eventLocation", group_eventLocation);
-               intent.putExtra("eventTime", group_eventTime);
-               intent.putExtra("eventDate", group_eventDate);
                intent.putExtra("group_motto",groups_groupMotto);
                startActivity(intent);
              }
