@@ -42,6 +42,9 @@ public class Group extends ActionBarActivity {
     String group_eventDate;
     String group_eventTime;
     String group_childKey;
+    String group_eventKeyID;
+    String group_userEmail;
+    String group_selectedGroup;
 
     //Event
     Event newEvent;
@@ -50,6 +53,12 @@ public class Group extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            group_userEmail = extras.getString("userEmail");
+            group_selectedGroup = extras.getString("groupName");
+        }
 
         group_eventList = new ArrayList<Event>();
 
@@ -62,6 +71,7 @@ public class Group extends ActionBarActivity {
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 int counter=0;
                 for (DataSnapshot child : snapshot.getChildren()) {
+                    group_eventKeyID = snapshot.getKey();
                     group_childKey = child.getKey();
                     if(group_childKey.equals("eventDate")){
                         counter++;
@@ -136,6 +146,8 @@ public class Group extends ActionBarActivity {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Intent intent = new Intent(Group.this, ChatMain.class);
+               intent.putExtra("key", group_eventKeyID);
+               intent.putExtra("userEmail", group_userEmail);
                startActivity(intent);
              }
          });
