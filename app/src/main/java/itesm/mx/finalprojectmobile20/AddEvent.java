@@ -54,6 +54,7 @@ public class AddEvent extends ActionBarActivity {
         if (extras != null) {
             group_selectedGroup = extras.getString("groupName");
         }
+        setTitle("New Event");
 
         ae_saveEvent_BT = (Button)findViewById(R.id.ae_saveEvent_BT);
         ae_eventName_ET = (EditText)findViewById(R.id.ae_eventName_ET);

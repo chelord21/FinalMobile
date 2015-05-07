@@ -59,6 +59,7 @@ public class ManageGroup extends ActionBarActivity {
             manageGroup_groupMotto = extras.getString("group_motto");
         }
 
+        setTitle(manageGroup_currentGroup + " Details");
         manageGroup_editPhoto_BtnUI = (Button)findViewById(R.id.mg_changePic_BT);
         manageGroup_saveChanges_BtnUI = (Button)findViewById(R.id.mg_saveChanges_BT);
         manageGroup_addFriend_BtnUI = (Button)findViewById(R.id.mg_addFriend_BT);
