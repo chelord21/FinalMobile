@@ -99,6 +99,7 @@ public class ManageGroup extends ActionBarActivity {
     }
 
     private void addFriend(final String email) {
+        System.out.println("user email: " + email);
         Firebase ref = new Firebase(FIREBASE_URL + "users");
         Query queryRef = ref.orderByChild("email").equalTo(email);
         
@@ -108,14 +109,24 @@ public class ManageGroup extends ActionBarActivity {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
                 if (!value.isEmpty()) {
                     manageGroup_user = value.get("user").toString();
+                    System.out.println("entro, map no esta empty, user: " + manageGroup_user);
                     groups_groupUsers.add(email);
 
-                    Firebase usersRef = new Firebase(FIREBASE_URL + "users");
+                    Firebase usersRef = new Firebase(FIREBASE_URL + "group/" + group_KeyID);
                     Map<String, Object> users = new HashMap<String, Object>();
-                    users.put("users", groups_groupUsers);
-                    usersRef.child(group_KeyID).updateChildren(users);
+                    users.put("grupo_users", groups_groupUsers);
+                    usersRef.updateChildren(users, new Firebase.CompletionListener() {
+                        @Override
+                        public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                            if (firebaseError != null) {
+                                System.out.println("User could not be added. " + firebaseError.getMessage());
+                            } else {
+                                System.out.println("User added successfully.");
+                            }
+                        }
+                    });
 
-                    System.out.println("User: " + manageGroup_user + "Users: " + groups_groupUsers);
+                    System.out.println("Added user: " + manageGroup_user + "Group users: " + groups_groupUsers);
                 } else {
                     Toast.makeText(getApplicationContext(), "User was not found", Toast.LENGTH_SHORT).show();
                 }
