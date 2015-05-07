@@ -29,6 +29,7 @@ public class ChatMain extends ActionBarActivity {
 
     private String chat_username;
     private String user_email;
+    private String chat_eventKey;
     private Firebase chat_firebase_ref;
     private ValueEventListener chat_event_VEL;
     private ChatListAdapter chat_listAdapter_LA;
@@ -42,11 +43,12 @@ public class ChatMain extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            user_email = extras.getString("email");
+            user_email = extras.getString("userEmail");
+            chat_eventKey = extras.getString("key");
         }
 
         getUsername();
-        chat_firebase_ref = new Firebase(FIREBASE_URL).child("chat");
+        chat_firebase_ref = new Firebase(FIREBASE_URL + "events/" + chat_eventKey).child("chat");
         chat_input_ET = (EditText) findViewById(R.id.messageInput);
 
         findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {

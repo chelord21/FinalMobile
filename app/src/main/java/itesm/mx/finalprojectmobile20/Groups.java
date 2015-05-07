@@ -54,9 +54,6 @@ public class Groups extends ActionBarActivity {
         groups_groupList = new ArrayList<Grupo_Java>();
         if(extras != null){
             user_email = extras.getString("email");
-            if(extras.getString("nombre")!=null){
-                groupName =extras.getString("nombre");
-            }
         }
 
         groupsLV = (ListView) findViewById(R.id.groups_grouplist_LV);
@@ -150,6 +147,7 @@ public class Groups extends ActionBarActivity {
                String groups_name_Str = groups_groupNameList.get(position);
                Intent intent = new Intent(Groups.this, Group.class);
                intent.putExtra("groupName", groups_name_Str);
+               intent.putExtra("userEmail", user_email);
                startActivity(intent);
              }
          });
