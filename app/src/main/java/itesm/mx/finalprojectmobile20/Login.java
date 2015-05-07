@@ -1,26 +1,26 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
-
-import itesm.mx.finalprojectmobile20.chat.Message;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 
 public class Login extends ActionBarActivity {
@@ -28,9 +28,11 @@ public class Login extends ActionBarActivity {
     EditText login_username_ET;
     EditText login_password_ET;
 
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+    String login_userEmail;
+
     //Image views
     ImageView login_logo_IV;
-    ImageView aux2;
 
     //Buttons
     Button login_login_Btn;
@@ -40,18 +42,14 @@ public class Login extends ActionBarActivity {
     //Listeners
     View.OnClickListener login_buttonsListener_VOL;
 
-    public static final String YOUR_APPLICATION_ID = "apXAsVSwGzEOIs1zqznS8obypwm8SGtHcrVsvRDM";
-    public static final String YOUR_CLIENT_KEY = "gPkvvX7CAJpsumX9YKeoUxEcXXCFVG81YSWnQfxN";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Firebase.setAndroidContext(this);
+        final Firebase fireBaseRef = new Firebase(FIREBASE_URL);
 
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, YOUR_APPLICATION_ID, YOUR_CLIENT_KEY);
-        ParseObject.registerSubclass(Message.class);
         login_username_ET = (EditText) findViewById(R.id.login_username_ET);
         login_password_ET =(EditText) findViewById(R.id.login_password_ET);
         login_logo_IV = (ImageView) findViewById(R.id.login_Logo_IV);
@@ -64,20 +62,24 @@ public class Login extends ActionBarActivity {
             public void onClick(View v) {
                 switch (v.getId()){
                     case R.id.login_Log_Btn:
-                        final String username = login_username_ET.getText().toString();
-                        String password = login_password_ET.getText().toString();
+                        login_userEmail = login_username_ET.getText().toString();
+                        String login_userPassword = login_password_ET.getText().toString();
 
-                        ParseUser.logInInBackground(username, password, new LogInCallback() {
-                            public void done(ParseUser user, ParseException e) {
-                                if (user != null) {
-                                    Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_SHORT).show();
-                                    Intent userProf = new Intent(Login.this, Groups.class);
-                                    startActivity(userProf);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Username or password is wrong", Toast.LENGTH_SHORT).show();
-                                }
+                        fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
+                                Intent userProf = new Intent(Login.this, Groups.class);
+                                userProf.putExtra("email", login_userEmail);
+                                startActivity(userProf);
+                            }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
                             }
                         });
+
                         break;
                     case R.id.login_nuser_Btn:
                         Intent newUser = new Intent(Login.this, NewUser.class);
@@ -99,23 +101,22 @@ public class Login extends ActionBarActivity {
                     public void onClick(DialogInterface arg0, int arg1) {
                         final String mail = input.getText().toString();
 
-                        ParseUser.requestPasswordResetInBackground(mail,
-                                new RequestPasswordResetCallback() {
-                                    public void done(ParseException e) {
-                                        if (e == null) {
-                                            // An email was successfully sent with reset instructions.
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Email has been sent to " + mail,
-                                                    Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            // Something went wrong. Look at the ParseException to see what's up.
-                                            Toast.makeText(getApplicationContext(),
-                                                    "We couldn't send the email. Please try again later.",
-                                                    Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                        Firebase.ResultHandler handler = new Firebase.ResultHandler() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Email has been sent",
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
+                            @Override
+                            public void onError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Oops, there was an error. Please try again",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        fireBaseRef.resetPassword(mail, handler);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,28 +134,48 @@ public class Login extends ActionBarActivity {
 
         login_login_Btn.setOnClickListener(login_buttonsListener_VOL);
         login_newUser_Btn.setOnClickListener(login_buttonsListener_VOL);
+
+        EditText editText = (EditText) findViewById(R.id.login_password_ET);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    login_userEmail = login_username_ET.getText().toString();
+                    String login_userPassword = login_password_ET.getText().toString();
+
+                    if(isNetworkConnected()){
+                        fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
+                                Intent userProf = new Intent(Login.this, Groups.class);
+                                userProf.putExtra("email", login_userEmail);
+                                startActivity(userProf);
+                            }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                Toast.makeText(getApplicationContext(), "Email or password is wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        handled = true;
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Cannot complete actions because you are not connected to internet", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                return handled;
+            }
+        });
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
             return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

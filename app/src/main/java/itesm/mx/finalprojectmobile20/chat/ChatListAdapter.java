@@ -1,80 +1,46 @@
 package itesm.mx.finalprojectmobile20.chat;
 
-import android.content.Context;
+import android.app.Activity;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.util.List;
+import com.firebase.client.Query;
 
 import itesm.mx.finalprojectmobile20.R;
 
 /**
- * Created by AlejandroSanchez on 3/23/15.
+ * Created by AlejandroSanchez on 4/22/15.
  */
-public class ChatListAdapter extends ArrayAdapter<Message> {
-    private String mUserId;
+public class ChatListAdapter extends FirebaseListAdapter<Chat>  {
 
-    public ChatListAdapter(Context context, String userId, List<Message> messages) {
-        super(context, 0, messages);
-        this.mUserId = userId;
+    private String chat_User;
+
+    public ChatListAdapter(Query ref, Activity activity, int layout, String mUsername) {
+        super(ref, Chat.class, layout, activity);
+        this.chat_User = mUsername;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.chat_item, parent, false);
-            final ViewHolder holder = new ViewHolder();
-            holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivProfileLeft);
-            holder.imageRight = (ImageView)convertView.findViewById(R.id.ivProfileRight);
-            holder.body = (TextView)convertView.findViewById(R.id.tvBody);
-            convertView.setTag(holder);
-        }
-        final Message message = (Message)getItem(position);
-        final ViewHolder holder = (ViewHolder)convertView.getTag();
-        final boolean isMe = message.getUserId().equals(mUserId);
-        // Show-hide image based on the logged-in user.
-        // Display the profile image to the right for our user, left for other users.
-        if (isMe) {
-            holder.imageRight.setVisibility(View.VISIBLE);
-            holder.imageLeft.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+    protected void populateView(View view, Chat chat) {
+        // Map a Chat object to an entry in our listview
+        String author = chat.getAuthor();
+        TextView authorText = (TextView) view.findViewById(R.id.author);
+        authorText.setText(author);
+        // If the message was sent by this user, color it differently
+        if (author != null && author.equals(chat_User)) {
+            Log.d("Prueba de tardanza coloreado author", "Se coloreo usuario rojo");
+            authorText.setTextColor(Color.RED);
+            authorText.setGravity(Gravity.RIGHT);
+            ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
+            ((TextView) view.findViewById(R.id.message)).setGravity(Gravity.RIGHT);
         } else {
-            holder.imageLeft.setVisibility(View.VISIBLE);
-            holder.imageRight.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            Log.d("Prueba de tardanza coloreado author", "Se coloreo usuario azul");
+            authorText.setTextColor(Color.BLUE);
+            authorText.setGravity(Gravity.LEFT);
+            ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
+            ((TextView) view.findViewById(R.id.message)).setGravity(Gravity.LEFT);
         }
-        final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        //Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
-        holder.body.setText(message.getBody());
-        return convertView;
     }
-
-    // Create a gravatar image based on the hash value obtained from userId
-    private static String getProfileUrl(final String userId) {
-        String hex = "";
-        try {
-            final MessageDigest digest = MessageDigest.getInstance("MD5");
-            final byte[] hash = digest.digest(userId.getBytes());
-            final BigInteger bigInt = new BigInteger(hash);
-            hex = bigInt.abs().toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "http://www.gravatar.com/avatar/" + hex + "?d=identicon";
-    }
-
-    final class ViewHolder {
-        public ImageView imageLeft;
-        public ImageView imageRight;
-        public TextView body;
-    }
-
 }

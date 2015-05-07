@@ -1,51 +1,63 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="itesm.mx.finalprojectmobile20.AddGroup">
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="itesm.mx.finalprojectmobile20.AddGroup">
 
 
-    <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:layout_weight="50"
-        android:id="@+id/ag_groupPic_IV"
-        android:src="@drawable/ic_launcher"
-        android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/ag_groupPic_IV"
+            android:src="@drawable/ic_launcher"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="34dp"
+            android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choose group picture"
-        android:id="@+id/ag_changePic_BT"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose group picture"
+            android:layout_below="@id/ag_groupPic_IV"
+            android:id="@+id/ag_changePic_BT"
+            android:layout_gravity="center_horizontal" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ag_groupName_ET"
-        android:hint="Type here your group name"
-        android:layout_below="@+id/ag_changePic_BT"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ag_groupName_ET"
+            android:hint="Type here your group name"
+            android:layout_below="@+id/ag_changePic_BT"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="34dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ag_groupMotto_ET"
-        android:hint="Group motto"
-        android:layout_below="@+id/ag_groupName_ET"
-        android:layout_centerHorizontal="true" />
+        <EditText
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ag_groupMotto_ET"
+            android:hint="Group motto"
+            android:layout_below="@+id/ag_groupName_ET"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="34dp"
+            android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        android:id="@+id/ag_save_BT"
-        android:layout_below="@+id/ag_groupMotto_ET"
-        android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:id="@+id/ag_save_BT"
+            android:layout_below="@+id/ag_groupMotto_ET"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"/>
 
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

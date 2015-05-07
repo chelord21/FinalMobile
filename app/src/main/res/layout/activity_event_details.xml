@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="itesm.mx.finalprojectmobile20.EventDetails">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/ed_eventName"
+        android:id="@+id/ed_groupNameTitle_TV"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/ed_groupName_TV"
+        android:layout_below="@+id/ed_groupNameTitle_TV"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/ed_startDate_TV"
+        android:id="@+id/ed_startDateTitle_TV"
+        android:layout_below="@+id/ed_groupName_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="34dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/ed_startDate_TV"
+        android:layout_below="@+id/ed_startDateTitle_TV"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/ed_startTime"
+        android:id="@+id/ed_startTimeTitle_TV"
+        android:layout_below="@+id/ed_startDate_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/ed_startTime_TV"
+        android:layout_below="@+id/ed_startTimeTitle_TV"
+        android:layout_alignRight="@+id/ed_startTimeTitle_TV"
+        android:layout_alignEnd="@+id/ed_startTimeTitle_TV" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/ed_locationTitle"
+        android:id="@+id/ed_locationTitle_TV"
+        android:layout_below="@+id/ed_startTime_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/ed_location_TV"
+        android:layout_below="@+id/ed_locationTitle_TV"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ed_viewOnMaps"
+        android:id="@+id/ed_viewOnMaps_BT"
+        android:layout_below="@+id/ed_location_TV"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp" />
+</RelativeLayout>

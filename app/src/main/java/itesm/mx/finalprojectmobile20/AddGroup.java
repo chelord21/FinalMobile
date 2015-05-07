@@ -2,16 +2,19 @@ package itesm.mx.finalprojectmobile20;
 
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,13 +24,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-import com.parse.RequestPasswordResetCallback;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 
 public class AddGroup extends ActionBarActivity{
@@ -38,40 +48,52 @@ public class AddGroup extends ActionBarActivity{
     Button ag_save_bt;
 
     /* EditTexts */
-    EditText ag_nombre_et;
-    EditText ag_motto_et;
+    EditText ag_groupName_et;
+    EditText ag_groupMotto_et;
 
     /* ImageViews */
     ImageView ag_groupPic_iv;
 
     /* Images */
     Bitmap scaled;
+    private Firebase ag_firebase_ref;
+    String imageString;
 
-    byte[] arrayFoto;
+    /* Strings*/
+    String user_email;
+    String user_name;
+
+    byte[] photoArray;
+
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            user_email = extras.getString("email");
+        }
 
         ag_changepic_bt = (Button)findViewById(R.id.ag_changePic_BT);
         ag_groupPic_iv = (ImageView)findViewById(R.id.ag_groupPic_IV);
         ag_save_bt = (Button)findViewById(R.id.ag_save_BT);
-        ag_nombre_et = (EditText)findViewById(R.id.ag_groupName_ET);
-        ag_motto_et = (EditText)findViewById(R.id.ag_groupMotto_ET);
+        ag_groupName_et = (EditText)findViewById(R.id.ag_groupName_ET);
+        ag_groupMotto_et = (EditText)findViewById(R.id.ag_groupMotto_ET);
+        ag_firebase_ref = new Firebase(FIREBASE_URL).child("group");
 
-
-        final CharSequence[] options = { "Take Photo", "Select from Gallery","Cancel" };
+        final CharSequence[] photo_DialogOptions = { "Take Photo", "Select from Gallery","Cancel" };
 
         ag_changepic_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddGroup.this);
-                builder.setTitle("Edit Photo");
-                builder.setItems(options, new DialogInterface.OnClickListener() {
+                AlertDialog.Builder dialog_builder = new AlertDialog.Builder(AddGroup.this);
+                dialog_builder.setTitle("Edit Photo");
+                dialog_builder.setItems(photo_DialogOptions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
-                        if (options[item].equals("Take Photo")) {
+                        if (photo_DialogOptions[item].equals("Take Photo")) {
                             try {
                                 File f = new File(android.os.Environment.getExternalStorageDirectory(), "profile.jpg");
 
@@ -80,14 +102,14 @@ public class AddGroup extends ActionBarActivity{
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                                 intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-
                                 startActivityForResult(intent, 1);
+
                             } catch (ActivityNotFoundException e) {
                                 Log.e(TAG, "No camera: " + e);
                             } catch (Exception e) {
                                 Log.e(TAG, "Cannot make photo: " + e);
                             }
-                        } else if (options[item].equals("Select from Gallery")) {
+                        } else if (photo_DialogOptions[item].equals("Select from Gallery")) {
                             try {
                                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                                 intent.setType("image/*");
@@ -95,12 +117,12 @@ public class AddGroup extends ActionBarActivity{
                             } catch (ActivityNotFoundException e) {
                                 Log.e(TAG, "No gallery: " + e);
                             }
-                        } else if (options[item].equals("Cancel")) {
+                        } else if (photo_DialogOptions[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
                     }
                 });
-                builder.show();
+                dialog_builder.show();
             }
         });
 
@@ -111,19 +133,60 @@ public class AddGroup extends ActionBarActivity{
                 /*
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 scaled.compress(Bitmap.CompressFormat.PNG, 0, stream);
-                arrayFoto = stream.toByteArray();
+                photoArray = stream.toByteArray();
                 */
+                if(isNetworkConnected()) {
+                    if (!ag_groupName_et.getText().toString().isEmpty() || !ag_groupMotto_et.getText().toString().isEmpty()) {
+                        String group_name = ag_groupName_et.getText().toString();
+                        String group_motto = ag_groupMotto_et.getText().toString();
+                        ArrayList<String> group_userList;
+                        Firebase ref = new Firebase(FIREBASE_URL + "users");
+                        Query queryRef = ref.orderByChild("email").equalTo(user_email);
 
-                if(!ag_nombre_et.getText().toString().isEmpty() || !ag_motto_et.getText().toString().isEmpty()) {
-                    ParseObject newGroup = new ParseObject("Group");
-                    newGroup.put("nombre", ag_nombre_et.getText().toString());
-                    newGroup.put("motto", ag_motto_et.getText().toString());
-                    newGroup.saveInBackground();
-                    Intent intent = new Intent(AddGroup.this, Groups.class);
-                    startActivity(intent);
+                        queryRef.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                                Map<String, Object> value = (Map<String, Object>) snapshot.getValue();
+                                user_name = value.get("user").toString();
+                                System.out.println("User: " + value.get("user"));
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+
+                        }
+                    });
+
+                    group_userList = new ArrayList<>();
+                    group_userList.add(user_email);
+                    Grupo_Java grupo_java = new Grupo_Java(group_name, group_motto, group_userList);
+                    ag_firebase_ref.push().setValue(grupo_java);
+                    Intent intent = new Intent();
+                    intent.putExtra("nombre", grupo_java.getGrupo_nombre());
+                    finish();
                 }
                 else{
                     Toast.makeText(AddGroup.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();
+                   }
+                }else{
+                    Toast.makeText(AddGroup.this, "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -190,5 +253,30 @@ public class AddGroup extends ActionBarActivity{
                 ag_groupPic_iv.setImageBitmap(thumbnail);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(AddGroup.this, "Group was not created", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
+    private class MyNullKeySerializer extends JsonSerializer<Object> {
+        @Override
+        public void serialize(Object nullKey, JsonGenerator jsonGenerator, SerializerProvider unused)
+            throws IOException, JsonProcessingException
+         {
+            jsonGenerator.writeFieldName("");
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }

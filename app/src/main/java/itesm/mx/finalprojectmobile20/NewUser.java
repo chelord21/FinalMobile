@@ -1,6 +1,9 @@
 package itesm.mx.finalprojectmobile20;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
@@ -11,12 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.Map;
 
 
 public class NewUser extends ActionBarActivity {
+
+    //Firebase
+    private Firebase user_firebase_ref;
 
     //Edit Text
     /*
@@ -58,6 +65,10 @@ public class NewUser extends ActionBarActivity {
 
         newUser_create_Btn = (Button) findViewById(R.id.newUser_create_Btn);
 
+        Firebase.setAndroidContext(this);
+        final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+        final Firebase fireBaseRef = new Firebase(FIREBASE_URL);
+
         /*
             The listener just listens to the button Create, which sends the information to the Server
             the if verifies the passwords, if they match then it redirects to the main screen
@@ -66,53 +77,61 @@ public class NewUser extends ActionBarActivity {
         newUser_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newUser_create_Btn.isPressed()){
-                    String username = newUser_username_ET.getText().toString();
-                    String email = newUser_email_ET.getText().toString();
-                    String password = newUser_password_ET.getText().toString();
-                    String repassword = newUser_rePasssword_ET.getText().toString();
-                    if(isValidEmail(email)){
-                        if(!password.matches("") && !repassword.matches("")){
-                            if(password.equals(repassword)) {
-                                if (username.matches("")) {
-                                    Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    ParseUser user = new ParseUser();
-                                    user.setUsername(username);
-                                    user.setPassword(password);
-                                    user.setEmail(email);
-                                    user.signUpInBackground(new SignUpCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            if (e == null) {
-                                                Toast.makeText(getApplicationContext(), "User created succesfully", Toast.LENGTH_SHORT).show();
-                                                //Change this due to the fact that there will be creation of groups
-                                                Intent intent = new Intent(NewUser.this, Groups.class);
-                                                startActivity(intent);
-                                            } else {
+                if (newUser_create_Btn.isPressed()) {
+                    if (isNetworkConnected()) {
+                        String username = newUser_username_ET.getText().toString();
+                        String email = newUser_email_ET.getText().toString();
+                        String password = newUser_password_ET.getText().toString();
+                        String repassword = newUser_rePasssword_ET.getText().toString();
+                        if (isValidEmail(email)) {
+                            if (!password.matches("") && !repassword.matches("")) {
+                                if (password.equals(repassword)) {
+                                    if (username.matches("")) {
+                                        Toast.makeText(getApplicationContext(), "Username field is empty. Please fill it and try again.", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        fireBaseRef.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                                            @Override
+                                            public void onSuccess(Map<String, Object> result) {
+                                                System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                                            }
+
+                                            @Override
+                                            public void onError(FirebaseError firebaseError) {
                                                 Toast.makeText(getApplicationContext(), "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                             }
-                                        }
-                                    });
+                                        });
+                                        User user = new User(username, email);
+                                        user_firebase_ref = new Firebase(FIREBASE_URL).child("users");
+                                        user_firebase_ref.push().setValue(user);
+                                        Intent userProf = new Intent(NewUser.this, Groups.class);
+                                        userProf.putExtra("email", user.getEmail());
+                                        startActivity(userProf);
+                                    }
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
                                 }
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You didn't fill both password fields", Toast.LENGTH_SHORT).show();
                             }
-                            else{
-                                Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
-                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Email is invalid. Please modify it and try again", Toast.LENGTH_SHORT).show();
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(),"You didn't fill both password fields",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(),"Invalid email",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Cannot complete action because you are not connected to internet", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         };
+
+
         newUser_create_Btn.setOnClickListener(newUser_listener);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(NewUser.this, "User was not created", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 
     @Override
@@ -146,5 +165,15 @@ public class NewUser extends ActionBarActivity {
      */
     public final static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
     }
 }
