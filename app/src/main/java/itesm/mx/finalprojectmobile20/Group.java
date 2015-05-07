@@ -60,8 +60,8 @@ public class Group extends ActionBarActivity {
         if (extras != null) {
             group_userEmail = extras.getString("userEmail");
             group_selectedGroup = extras.getString("groupName");
-            group_KeyID = extras.getExtras.getString("group_key");
-            groups_groupUsers = extras.getArrayList("users");
+            group_KeyID = extras.getString("group_key");
+            groups_groupUsers = extras.getStringArrayList("users");
         }
 
         group_eventList = new ArrayList<Event>();
@@ -152,10 +152,10 @@ public class Group extends ActionBarActivity {
                Intent intent = new Intent(Group.this, ChatMain.class);
                intent.putExtra("key", group_eventKeyID);
                intent.putExtra("userEmail", group_userEmail);
-               intent.putExtra("eventName", group_eventName)
-               intent.putExtra("eventLocation", group_eventLocation)
-               intent.putExtra("eventTime", group_eventTime)
-               intent.putExtra("eventDate", group_eventDate)
+               intent.putExtra("eventName", group_eventName);
+               intent.putExtra("eventLocation", group_eventLocation);
+               intent.putExtra("eventTime", group_eventTime);
+               intent.putExtra("eventDate", group_eventDate);
                startActivity(intent);
              }
          });

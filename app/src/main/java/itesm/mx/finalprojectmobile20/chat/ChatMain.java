@@ -24,9 +24,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
-import itesm.mx.finalprojectmobile20.AddEvent;
 import itesm.mx.finalprojectmobile20.EventDetails;
-import itesm.mx.finalprojectmobile20.ManageGroup;
 import itesm.mx.finalprojectmobile20.R;
 
 public class ChatMain extends ActionBarActivity {
@@ -43,10 +41,10 @@ public class ChatMain extends ActionBarActivity {
     EditText chat_input_ET;
 
     //Strings
-    Strings chat_eventName;
-    Strings chat_eventLocation;
-    Strings chat_eventDate;
-    Strings chat_eventTime;
+    String chat_eventName;
+    String chat_eventLocation;
+    String chat_eventDate;
+    String chat_eventTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

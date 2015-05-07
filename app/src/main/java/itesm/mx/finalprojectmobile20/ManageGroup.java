@@ -14,6 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class ManageGroup extends ActionBarActivity {
 
@@ -28,9 +38,10 @@ public class ManageGroup extends ActionBarActivity {
     private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
 
     //Strings
-    Strings manageGroup_user;
+    String manageGroup_user;
     String group_KeyID;
-    ArrayList<Strings> groups_groupUsers;
+    ArrayList<String> groups_groupUsers;
+    String groups_userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +50,8 @@ public class ManageGroup extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            group_KeyID = extras.getExtras.getString("group_key");
-            groups_groupUsers = extras.getExtras.getArrayList("users");
+            group_KeyID = extras.getString("group_key");
+            groups_groupUsers = extras.getStringArrayList("users");
         }
 
         manageGroup_editPhoto_BtnUI = (Button)findViewById(R.id.mg_changePic_BT);
@@ -62,11 +73,11 @@ public class ManageGroup extends ActionBarActivity {
                     alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
-                            final String email = input.getText().toString();
+                            groups_userEmail = input.getText().toString();
                             Toast.makeText(getApplicationContext(),
                                     "Please wait",
                                     Toast.LENGTH_SHORT).show();
-                            addFriend(email);
+                            addFriend(groups_userEmail);
                         }
                     });
                     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -87,7 +98,7 @@ public class ManageGroup extends ActionBarActivity {
 
     }
 
-    private void addFriend(String email) {
+    private void addFriend(final String email) {
         Firebase ref = new Firebase(FIREBASE_URL + "users");
         Query queryRef = ref.orderByChild("email").equalTo(email);
         
@@ -95,7 +106,7 @@ public class ManageGroup extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
-                if (!value = null) {
+                if (!value.isEmpty()) {
                     manageGroup_user = value.get("user").toString();
                     groups_groupUsers.add(email);
 
