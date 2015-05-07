@@ -46,7 +46,9 @@ public class Group extends ActionBarActivity {
     String group_KeyID;
     String group_userEmail;
     String group_selectedGroup;
+    String groups_groupMotto;
     ArrayList<String> groups_groupUsers;
+
 
     //Event
     Event newEvent;
@@ -62,6 +64,7 @@ public class Group extends ActionBarActivity {
             group_selectedGroup = extras.getString("groupName");
             group_KeyID = extras.getString("group_key");
             groups_groupUsers = extras.getStringArrayList("users");
+            groups_groupMotto = extras.getString("group_motto");
         }
 
         group_eventList = new ArrayList<Event>();
@@ -156,6 +159,7 @@ public class Group extends ActionBarActivity {
                intent.putExtra("eventLocation", group_eventLocation);
                intent.putExtra("eventTime", group_eventTime);
                intent.putExtra("eventDate", group_eventDate);
+               intent.putExtra("group_motto",groups_groupMotto);
                startActivity(intent);
              }
          });
@@ -197,6 +201,8 @@ public class Group extends ActionBarActivity {
             Intent intent = new Intent(Group.this, ManageGroup.class);
             intent.putExtra("group_key", group_KeyID);
             intent.putExtra("users", groups_groupUsers);
+            intent.putExtra("groupName",group_selectedGroup);
+            intent.putExtra("group_motto",groups_groupMotto);
             startActivity(intent);
         }
 

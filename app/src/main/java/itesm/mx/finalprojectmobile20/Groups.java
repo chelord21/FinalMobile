@@ -152,6 +152,7 @@ public class Groups extends ActionBarActivity {
                intent.putExtra("groupName", groups_name_Str);
                intent.putExtra("userEmail", user_email);
                intent.putExtra("group_key", groups_groupList.get(position).getGrupo_key());
+               intent.putExtra("group_motto", groups_groupList.get(position).getGrupo_motto());
                intent.putExtra("users", groups_groupUsers);
                startActivity(intent);
              }

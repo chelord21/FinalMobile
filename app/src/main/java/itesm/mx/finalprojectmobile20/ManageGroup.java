@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -42,6 +43,8 @@ public class ManageGroup extends ActionBarActivity {
     String group_KeyID;
     ArrayList<String> groups_groupUsers;
     String groups_userEmail;
+    String manageGroup_currentGroup;
+    String manageGroup_groupMotto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class ManageGroup extends ActionBarActivity {
         if (extras != null) {
             group_KeyID = extras.getString("group_key");
             groups_groupUsers = extras.getStringArrayList("users");
+            manageGroup_currentGroup = extras.getString("groupName");
+            manageGroup_groupMotto = extras.getString("group_motto");
         }
 
         manageGroup_editPhoto_BtnUI = (Button)findViewById(R.id.mg_changePic_BT);
@@ -60,6 +65,18 @@ public class ManageGroup extends ActionBarActivity {
         manageGroup_groupName_TV = (TextView)findViewById(R.id.mg_groupName_ET);
         manageGroup_groupMotto_TV = (TextView)findViewById(R.id.mg_groupMotto_ET);
         manageGroup_members_LV = (ListView)findViewById(R.id.mg_members_LV);
+
+        manageGroup_groupName_TV.setText(manageGroup_currentGroup);
+        manageGroup_groupMotto_TV.setText(manageGroup_groupMotto);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                R.layout.activity_row,
+                R.id.rowTV,
+                groups_groupUsers
+        );
+
+        manageGroup_members_LV.setAdapter(adapter);
 
 
         manageGroup_addFriend_BtnUI.setOnClickListener(new View.OnClickListener() {
