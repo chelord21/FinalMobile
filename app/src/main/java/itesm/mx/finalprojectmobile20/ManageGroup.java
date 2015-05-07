@@ -24,10 +24,24 @@ public class ManageGroup extends ActionBarActivity {
     TextView manageGroup_groupMotto_TV;
     ListView manageGroup_members_LV;
 
+    //Firebase
+    private static final String FIREBASE_URL ="https://hop-in.firebaseio.com/";
+
+    //Strings
+    Strings manageGroup_user;
+    String group_KeyID;
+    ArrayList<Strings> groups_groupUsers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_group);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            group_KeyID = extras.getExtras.getString("group_key");
+            groups_groupUsers = extras.getExtras.getArrayList("users");
+        }
 
         manageGroup_editPhoto_BtnUI = (Button)findViewById(R.id.mg_changePic_BT);
         manageGroup_saveChanges_BtnUI = (Button)findViewById(R.id.mg_saveChanges_BT);
@@ -52,10 +66,7 @@ public class ManageGroup extends ActionBarActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Please wait",
                                     Toast.LENGTH_SHORT).show();
-
-                            /* Verificar que el usuario exista y mostrar un mensaje de "Usuario encontrado o algo así" */
-
-
+                            addFriend(email);
                         }
                     });
                     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -74,6 +85,51 @@ public class ManageGroup extends ActionBarActivity {
             }
         });
 
+    }
+
+    private void addFriend(String email) {
+        Firebase ref = new Firebase(FIREBASE_URL + "users");
+        Query queryRef = ref.orderByChild("email").equalTo(email);
+        
+        queryRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChild) {
+                Map<String, Object> value = (Map<String, Object>)snapshot.getValue();
+                if (!value = null) {
+                    manageGroup_user = value.get("user").toString();
+                    groups_groupUsers.add(email);
+
+                    Firebase usersRef = new Firebase(FIREBASE_URL + "users");
+                    Map<String, Object> users = new HashMap<String, Object>();
+                    users.put("users", groups_groupUsers);
+                    usersRef.child(group_KeyID).updateChildren(users);
+
+                    System.out.println("User: " + manageGroup_user + "Users: " + groups_groupUsers);
+                } else {
+                    Toast.makeText(getApplicationContext(), "User was not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private boolean isNetworkConnected() {

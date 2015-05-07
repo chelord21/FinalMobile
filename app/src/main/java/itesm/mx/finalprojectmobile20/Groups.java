@@ -27,6 +27,7 @@ public class Groups extends ActionBarActivity {
     ListView groupsLV;
     String group_name;
     String group_motto;
+    String group_key;
     List<String> groups_groupNameList;
 
     ArrayList<Grupo_Java> groups_groupList;
@@ -67,6 +68,7 @@ public class Groups extends ActionBarActivity {
             public void onChildAdded(DataSnapshot snapshot, String previousChild) {
                 int counter=0;
                 for (DataSnapshot child : snapshot.getChildren()) {
+                    group_key = snapshot.getKey();
                     groups_childKey =child.getKey();
                     if(groups_childKey.equals("grupo_nombre")){
                         counter++;
@@ -87,6 +89,7 @@ public class Groups extends ActionBarActivity {
                             Thread.sleep(100);
                             System.out.println(groups_groupMotto + " " + groups_groupUsers +  " " + groups_groupName);
                             grupo_java = new Grupo_Java(groups_groupName, groups_groupMotto, groups_groupUsers);
+                            grupo_java.setGrupo_key(group_key);
                             groups_groupList.add(grupo_java);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -148,6 +151,8 @@ public class Groups extends ActionBarActivity {
                Intent intent = new Intent(Groups.this, Group.class);
                intent.putExtra("groupName", groups_name_Str);
                intent.putExtra("userEmail", user_email);
+               intent.putExtra("group_key", groups_groupList.get(position).getGrupo_key());
+               intent.putExtra("users", groups_groupUsers);
                startActivity(intent);
              }
          });

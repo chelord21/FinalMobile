@@ -36,6 +36,12 @@ public class ChatMain extends ActionBarActivity {
 
     EditText chat_input_ET;
 
+    //Strings
+    Strings chat_eventName;
+    Strings chat_eventLocation;
+    Strings chat_eventDate;
+    Strings chat_eventTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,10 @@ public class ChatMain extends ActionBarActivity {
         if (extras != null) {
             user_email = extras.getString("userEmail");
             chat_eventKey = extras.getString("key");
+            chat_eventName = extras.getString("eventName");
+            chat_eventLocation = extras.getString("eventLocation");
+            chat_eventDate = extras.getString("eventDate");
+            chat_eventTime = extras.getString("eventTime");
         }
 
         getUsername();

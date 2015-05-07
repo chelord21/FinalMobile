@@ -43,8 +43,10 @@ public class Group extends ActionBarActivity {
     String group_eventTime;
     String group_childKey;
     String group_eventKeyID;
+    String group_KeyID;
     String group_userEmail;
     String group_selectedGroup;
+    ArrayList<String> groups_groupUsers;
 
     //Event
     Event newEvent;
@@ -58,6 +60,8 @@ public class Group extends ActionBarActivity {
         if (extras != null) {
             group_userEmail = extras.getString("userEmail");
             group_selectedGroup = extras.getString("groupName");
+            group_KeyID = extras.getExtras.getString("group_key");
+            groups_groupUsers = extras.getArrayList("users");
         }
 
         group_eventList = new ArrayList<Event>();
@@ -148,6 +152,10 @@ public class Group extends ActionBarActivity {
                Intent intent = new Intent(Group.this, ChatMain.class);
                intent.putExtra("key", group_eventKeyID);
                intent.putExtra("userEmail", group_userEmail);
+               intent.putExtra("eventName", group_eventName)
+               intent.putExtra("eventLocation", group_eventLocation)
+               intent.putExtra("eventTime", group_eventTime)
+               intent.putExtra("eventDate", group_eventDate)
                startActivity(intent);
              }
          });
@@ -187,6 +195,8 @@ public class Group extends ActionBarActivity {
         }
         else if (id == R.id.menuGroup_modifyGroup) {
             Intent intent = new Intent(Group.this, ManageGroup.class);
+            intent.putExtra("group_key", group_KeyID);
+            intent.putExtra("users", groups_groupUsers);
             startActivity(intent);
         }
 

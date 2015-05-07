@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Grupo_Java {
     String grupo_nombre;
     String grupo_motto;
+    String grupo_key;
     ArrayList<String> grupo_users;
 
     public Grupo_Java() {
@@ -34,6 +35,14 @@ public class Grupo_Java {
 
     public void setGrupo_nombre(String grupo_nombre) {
         this.grupo_nombre = grupo_nombre;
+    }
+
+    public String getGrupo_key() {
+        return grupo_key;
+    }
+
+    public void setGrupo_key(String grupo_key) {
+        this.grupo_key = grupo_key;
     }
 
     public String getGrupo_motto() {
