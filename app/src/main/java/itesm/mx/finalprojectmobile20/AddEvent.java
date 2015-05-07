@@ -38,6 +38,7 @@ public class AddEvent extends ActionBarActivity {
     String ae_eventLocation;
     String ae_eventDate;
     String ae_eventTime;
+    String group_selectedGroup;
 
     //Firebase
     private Firebase ae_firebase_ref;
@@ -48,6 +49,11 @@ public class AddEvent extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
         Firebase.setAndroidContext(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            group_selectedGroup = extras.getString("groupName");
+        }
 
         ae_saveEvent_BT = (Button)findViewById(R.id.ae_saveEvent_BT);
         ae_eventName_ET = (EditText)findViewById(R.id.ae_eventName_ET);
@@ -74,6 +80,7 @@ public class AddEvent extends ActionBarActivity {
                         ae_eventDate = ae_date_ET.getText().toString();
 
                         Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate);
+                        newEvent.setGroupName(group_selectedGroup);
                         ae_firebase_ref.push().setValue(newEvent);
                         Intent intent = new Intent(AddEvent.this, Group.class);
                         startActivity(intent);

@@ -8,6 +8,7 @@ public class Event {
     String eventLocation;
     String eventTime;
     String eventDate;
+    String groupName;
 
     public Event() {
 
@@ -18,6 +19,14 @@ public class Event {
         this.eventLocation = eventLocation;
         this.eventTime = eventTime;
         this.eventDate = eventDate;
+    }
+
+    public Event(String eventName, String eventLocation, String eventTime, String eventDate, String groupName) {
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventTime = eventTime;
+        this.eventDate = eventDate;
+        this.groupName = groupName;
     }
 
     public String getEventName() {
@@ -50,5 +59,13 @@ public class Event {
 
     public void setEventDate(String eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String eventDate) {
+        this.groupName = groupName;
     }
 }

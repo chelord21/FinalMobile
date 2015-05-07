@@ -47,6 +47,7 @@ public class Group extends ActionBarActivity {
     String group_userEmail;
     String group_selectedGroup;
     String groups_groupMotto;
+    String group_OwnerGroup;
     ArrayList<String> groups_groupUsers;
 
 
@@ -99,12 +100,16 @@ public class Group extends ActionBarActivity {
                         counter++;
                         group_eventTime = child.getValue().toString();
                         System.out.println("Time: "+ group_eventTime);
+                    } else if (group_childKey.equals("groupName")) {
+                        counter++;
+                        group_OwnerGroup = child.getValue().toString();
+                        System.out.println("Group Name: "+ group_OwnerGroup);
                     }
-                    if(counter == 4){
+                    if(counter == 5){
                         try {
                             Thread.sleep(100);
                             System.out.println(group_eventName + " " + group_eventLocation +  " " + group_eventTime + " " + group_eventDate);
-                            newEvent = new Event(group_eventName, group_eventLocation, group_eventTime, group_eventDate);
+                            newEvent = new Event(group_eventName, group_eventLocation, group_eventTime, group_eventDate, group_OwnerGroup);
                             group_eventList.add(newEvent);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -143,7 +148,11 @@ public class Group extends ActionBarActivity {
             public void onClick(View v) {
                 if(group_loadEvents_BT.isPressed()){
                     for(int i = 0; i< group_eventList.size(); i++){
-                        group_eventNameList.add(group_eventList.get(i).getEventName());
+                        System.out.println("Checo " + group_eventList.get(i).getGroupName());
+                        if(group_eventList.get(i).getGroupName().equals(group_selectedGroup)){
+                            group_eventNameList.add(group_eventList.get(i).getGroupName());
+                            System.out.println("Entro al if con " + group_eventList.get(i).getGroupName());
+                        }
                     }
                     loadEvents();
                     group_loadEvents_BT.setVisibility(View.INVISIBLE);
@@ -196,6 +205,7 @@ public class Group extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuGroup_addEvent) {
             Intent intent = new Intent(Group.this, AddEvent.class);
+            intent.putExtra("groupName", group_selectedGroup);
             startActivity(intent);
             return true;
         }
@@ -221,12 +231,16 @@ public class Group extends ActionBarActivity {
             public void onClick(View v) {
                 if(group_loadEvents_BT.isPressed()){
                     for(int i = 0; i< group_eventList.size(); i++){
-                        group_eventNameList.add(group_eventList.get(i).getEventName());
+                        System.out.println("Entro for loop de eventos");
+                        System.out.println("current grup: " + group_selectedGroup + " event group name: " + group_eventList.get(i).getGroupName());
+                        if (group_eventList.get(i).getGroupName().equals(group_selectedGroup)) {
+                            System.out.println("Entro a if, evento se encuentra en grupo");
+                            group_eventNameList.add(group_eventList.get(i).getEventName());
+                        }
                     }
                     loadEvents();
                     group_loadEvents_BT.setVisibility(View.INVISIBLE);
                 }
-
             }
         });
 
