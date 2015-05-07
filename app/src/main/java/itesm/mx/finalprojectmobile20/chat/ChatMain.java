@@ -61,6 +61,8 @@ public class ChatMain extends ActionBarActivity {
             chat_eventTime = extras.getString("eventTime");
         }
 
+        setTitle(chat_eventName);
+
         getUsername();
         chat_firebase_ref = new Firebase(FIREBASE_URL + "events/" + chat_eventKey).child("chat");
         chat_input_ET = (EditText) findViewById(R.id.messageInput);
@@ -182,6 +184,10 @@ public class ChatMain extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menuChat_eventDetails) {
             Intent intent = new Intent(ChatMain.this, EventDetails.class);
+            intent.putExtra("eventName", chat_eventName);
+            intent.putExtra("eventDate", chat_eventDate);
+            intent.putExtra("eventTime", chat_eventTime);
+            intent.putExtra("eventLocation", chat_eventLocation);
             startActivity(intent);
             return true;
         }

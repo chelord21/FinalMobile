@@ -64,6 +64,8 @@ public class Group extends ActionBarActivity {
             groups_groupUsers = extras.getStringArrayList("users");
         }
 
+        setTitle(group_selectedGroup);
+
         group_eventList = new ArrayList<Event>();
 
         group_EventsLV = (ListView)findViewById(R.id.group_eventList_LV);
