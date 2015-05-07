@@ -67,6 +67,8 @@ public class Group extends ActionBarActivity {
             groups_groupMotto = extras.getString("group_motto");
         }
 
+        setTitle(group_selectedGroup);
+
         group_eventList = new ArrayList<Event>();
 
         group_EventsLV = (ListView)findViewById(R.id.group_eventList_LV);
