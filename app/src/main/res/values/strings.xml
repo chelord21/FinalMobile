@@ -50,5 +50,12 @@
     <string name="title_activity_add_event">AddEvent</string>
     <string name="saveEvent_BT">Save Event</string>
     <string name="title_activity_group">Group</string>
+    <string name="title_activity_event_details">EventDetails</string>
+    <string name="ed_eventName">Event name:</string>
+    <string name="ed_startDate_TV">Start date:</string>
+    <string name="ed_startTime">Start time</string>
+    <string name="ed_locationTitle">Venue:</string>
+    <string name="ed_viewOnMaps">Open Maps</string>
+    <string name="menuChat_eventDet">Details</string>
 
 </resources>
