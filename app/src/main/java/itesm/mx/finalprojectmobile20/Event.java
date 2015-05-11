@@ -22,6 +22,14 @@ public class Event {
         this.eventDate = eventDate;
     }
 
+    public Event(String eventName, String eventLocation, String eventTime, String eventDate, String groupName) {
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventTime = eventTime;
+        this.eventDate = eventDate;
+        this.groupName = groupName;
+    }
+
     public Event(String eventName, String eventLocation, String eventTime, String eventDate, String groupName, String groupKey) {
         this.eventName = eventName;
         this.eventLocation = eventLocation;

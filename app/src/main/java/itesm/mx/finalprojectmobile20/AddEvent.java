@@ -80,8 +80,7 @@ public class AddEvent extends ActionBarActivity {
                         ae_eventTime = ae_time_ET.getText().toString();
                         ae_eventDate = ae_date_ET.getText().toString();
 
-                        Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate);
-                        newEvent.setGroupName(group_selectedGroup);
+                        Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate, group_selectedGroup);
                         ae_firebase_ref.push().setValue(newEvent);
                         Intent intent = new Intent(AddEvent.this, Group.class);
                         startActivity(intent);
