@@ -1,6 +1,10 @@
 # FinalMobile
 Proyecto final móviles
 
+Marco Antonio Ramírez Alarcón A01191344
+Alejandro Sanchez A01191434
+Marcelo Salcedo A01195804
+
 The MIT License (MIT)
 
 Copyright (c) 2015 Marcelo
