@@ -147,13 +147,17 @@ public class Groups extends ActionBarActivity {
          groupsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
              @Override
              public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               String groups_name_Str = groups_groupNameList.get(position);
                Intent intent = new Intent(Groups.this, Group.class);
-               intent.putExtra("groupName", groups_name_Str);
-               intent.putExtra("userEmail", user_email);
-               intent.putExtra("group_key", groups_groupList.get(position).getGrupo_key());
-               intent.putExtra("group_motto", groups_groupList.get(position).getGrupo_motto());
-               intent.putExtra("users", groups_groupUsers);
+               for (int i = 0; i < groups_groupList.size(); i++) {
+                   if (groups_groupList.get(i).getGrupo_nombre().equals(groups_groupNameList.get(position))) {
+                       System.out.println("Group Key from group click: " + groups_groupList.get(i).getGrupo_key());
+                       intent.putExtra("group_key", groups_groupList.get(i).getGrupo_key());
+                       intent.putExtra("groupName", groups_groupList.get(i).getGrupo_nombre());
+                       intent.putExtra("userEmail", user_email);
+                       intent.putExtra("group_motto", groups_groupList.get(i).getGrupo_motto());
+                       intent.putExtra("users", groups_groupList.get(i).getGrupo_users());
+                   }
+               }
                startActivity(intent);
              }
          });
