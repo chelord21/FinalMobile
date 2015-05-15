@@ -74,7 +74,7 @@ public class AddEvent extends ActionBarActivity {
                 arrayFoto = stream.toByteArray();
                 */
                 if(isNetworkConnected()) {
-                    if (!ae_date_ET.getText().toString().isEmpty() || !ae_eventLocation_ET.getText().toString().isEmpty() || !ae_eventName_ET.getText().toString().isEmpty() || !ae_time_ET.getText().toString().isEmpty()) {
+                    if (!ae_date_ET.getText().toString().isEmpty() && !ae_eventLocation_ET.getText().toString().isEmpty() && !ae_eventName_ET.getText().toString().isEmpty() && !ae_time_ET.getText().toString().isEmpty()) {
                         ae_eventName = ae_eventName_ET.getText().toString();
                         ae_eventLocation = ae_eventLocation_ET.getText().toString();
                         ae_eventTime = ae_time_ET.getText().toString();
@@ -84,6 +84,7 @@ public class AddEvent extends ActionBarActivity {
                         ae_firebase_ref.push().setValue(newEvent);
                         Intent intent = new Intent(AddEvent.this, Group.class);
                         startActivity(intent);
+                        Toast.makeText(AddEvent.this, "Group created succesfully.", Toast.LENGTH_SHORT).show();
                     }
                     else{
                         Toast.makeText(AddEvent.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();

@@ -136,7 +136,7 @@ public class AddGroup extends ActionBarActivity{
                 photoArray = stream.toByteArray();
                 */
                 if(isNetworkConnected()) {
-                    if (!ag_groupName_et.getText().toString().isEmpty() || !ag_groupMotto_et.getText().toString().isEmpty()) {
+                    if (!ag_groupName_et.getText().toString().isEmpty() && !ag_groupMotto_et.getText().toString().isEmpty()) {
                         String group_name = ag_groupName_et.getText().toString();
                         String group_motto = ag_groupMotto_et.getText().toString();
                         ArrayList<String> group_userList;
