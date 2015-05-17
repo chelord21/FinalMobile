@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -68,7 +67,8 @@ public class Login extends ActionBarActivity {
                         fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                login_username_ET.setText("");
+                                login_password_ET.setText("");
                                 Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
                                 Intent userProf = new Intent(Login.this, Groups.class);
                                 userProf.putExtra("email", login_userEmail);
@@ -148,7 +148,8 @@ public class Login extends ActionBarActivity {
                         fireBaseRef.authWithPassword(login_userEmail, login_userPassword, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                                login_username_ET.setText("");
+                                login_password_ET.setText("");
                                 Toast.makeText(getApplicationContext(), "Welcome " + login_userEmail, Toast.LENGTH_SHORT).show();
                                 Intent userProf = new Intent(Login.this, Groups.class);
                                 userProf.putExtra("email", login_userEmail);
