@@ -1,7 +1,6 @@
 package itesm.mx.finalprojectmobile20;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -82,9 +81,7 @@ public class AddEvent extends ActionBarActivity {
 
                         Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate, group_selectedGroup);
                         ae_firebase_ref.push().setValue(newEvent);
-                        Intent intent = new Intent(AddEvent.this, Group.class);
-                        startActivity(intent);
-                        Toast.makeText(AddEvent.this, "Group created succesfully.", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                     else{
                         Toast.makeText(AddEvent.this, "Not all fields were filled. Please try again.", Toast.LENGTH_SHORT).show();

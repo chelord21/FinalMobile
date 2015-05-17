@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -49,6 +50,7 @@ public class Group extends ActionBarActivity {
     String groups_groupMotto;
     String group_OwnerGroup;
     ArrayList<String> groups_groupUsers;
+    static final int ADD_EVENT_REQUEST = 1;
 
 
     //Event
@@ -213,7 +215,7 @@ public class Group extends ActionBarActivity {
         if (id == R.id.menuGroup_addEvent) {
             Intent intent = new Intent(Group.this, AddEvent.class);
             intent.putExtra("groupName", group_selectedGroup);
-            startActivity(intent);
+            startActivityForResult(intent, ADD_EVENT_REQUEST);
             return true;
         }
         else if (id == R.id.menuGroup_modifyGroup) {
@@ -264,5 +266,16 @@ public class Group extends ActionBarActivity {
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == ADD_EVENT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(getApplicationContext(), "Event created", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 }
