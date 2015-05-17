@@ -177,6 +177,7 @@ public class AddGroup extends ActionBarActivity{
                     group_userList.add(user_email);
                     Grupo_Java grupo_java = new Grupo_Java(group_name, group_motto, group_userList);
                     ag_firebase_ref.push().setValue(grupo_java);
+                        Toast.makeText(getApplicationContext(), "Group created", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else{

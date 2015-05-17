@@ -39,7 +39,7 @@ public class Groups extends ActionBarActivity {
     String groups_groupMotto;
     Grupo_Java grupo_java;
     ArrayList<String> groups_groupUsers;
-    static final int ADD_GROUP_REQUEST = 1;
+    static final int ADD_GROUP_REQUEST = 3;
 
     Button groups_loadGroups_BT;
 
@@ -255,9 +255,7 @@ public class Groups extends ActionBarActivity {
         // Check which request we're responding to
         if (requestCode == ADD_GROUP_REQUEST) {
             // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(getApplicationContext(), "Group created", Toast.LENGTH_SHORT).show();
-            }
+
         }
 
     }

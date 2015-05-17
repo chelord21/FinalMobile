@@ -81,6 +81,7 @@ public class AddEvent extends ActionBarActivity {
 
                         Event newEvent = new Event(ae_eventName, ae_eventLocation, ae_eventTime, ae_eventDate, group_selectedGroup);
                         ae_firebase_ref.push().setValue(newEvent);
+                        Toast.makeText(getApplicationContext(), "Event created", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                     else{

@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -50,7 +49,7 @@ public class Group extends ActionBarActivity {
     String groups_groupMotto;
     String group_OwnerGroup;
     ArrayList<String> groups_groupUsers;
-    static final int ADD_EVENT_REQUEST = 1;
+    static final int ADD_EVENT_REQUEST = 3;
 
 
     //Event
@@ -272,9 +271,7 @@ public class Group extends ActionBarActivity {
         // Check which request we're responding to
         if (requestCode == ADD_EVENT_REQUEST) {
             // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(getApplicationContext(), "Event created", Toast.LENGTH_SHORT).show();
-            }
+
         }
 
     }
